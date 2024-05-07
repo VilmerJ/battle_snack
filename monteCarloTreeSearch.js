@@ -1,18 +1,19 @@
-import { generateNewBoard } from "./generateState";
+import { generateNewState } from "./generateState";
 import { getLegalMoves } from "./helpers";
 import { evaluation } from "./evaluation";
 
 const EXLORATION_CONSTANT = Math.sqrt(2);
+const MAX_SIMULATIONS_DEPTH = 40;
+const MAX_TIME = 100; // 100 ms
 
-export const monteCarloTreeSearch = (state, maxIterations) => {
+export const monteCarloTreeSearch = (state) => {
   const root = new Node(state);
-  let iterations = 0;
 
-  while (iterations < maxIterations) {
+  const start = Date.now();
+  while (Date.now() - start < MAX_TIME) {
     const node = select(root);
-    const result = simulate(node.state);
+    const result = simulate(node.state, 0);
     backpropagate(node, result);
-    iterations += 1;
   }
 
   return bestChild(root).state;
@@ -26,14 +27,25 @@ class Node {
     this.visits = 0;
     this.score = 0;
   }
+
+  addChild(child) {
+    this.children.push(child);
+  }
+
+  reCalculateScore() {
+    const totalScore = this.children.reduce((acc, child) => {
+      return acc + child.score;
+    }, 0);
+    this.score = totalScore / this.visits;
+  }
 }
 
 const select = (node) => {
-  while (node.children.length > 0) {
-    node = bestUCT(node);
+  if (node.children.length === 0) {
+    return null;
   }
 
-  return node;
+  return bestUCT(node);
 };
 
 const bestUCT = (node) => {
@@ -44,7 +56,7 @@ const bestUCT = (node) => {
     const uct =
       child.score +
       EXLORATION_CONSTANT *
-        Math.sqrt((2 * Math.log(node.visits)) / child.visits);
+        Math.sqrt((2 * Math.log(node.visits)) / (child.visits + 0.0001)); // Avoid division by zero
     if (uct > bestUCT) {
       bestUCT = uct;
       bestChild = child;
@@ -54,36 +66,24 @@ const bestUCT = (node) => {
   return bestChild;
 };
 
-const simulate = (state) => {
-  let currentState = JSON.parse(JSON.stringify(state));
-
-  while (!isTerminal(currentState)) {
-    const legalMoves = getLegalMoves(
-      currentState.snakes[0].body,
-      currentState.board.width,
-      currentState.board.height,
-      currentState.snakes
-    );
-    const safeMoves = Object.keys(legalMoves).filter((key) => legalMoves[key]);
-    const randomMove = safeMoves[Math.floor(Math.random() * safeMoves.length)];
-
-    currentState = generateNewBoard(
-      currentState,
-      currentState.snakes[0].id,
-      randomMove
-    );
+const simulate = (node, depth) => {
+  if (depth > MAX_SIMULATIONS_DEPTH) {
+    return evaluation(currentState.snakes, currentState.snakes);
   }
 
-  return evaluation(
-    [currentState.snakes[0]],
-    currentState.snakes.filter(
-      (snake) => snake.id !== currentState.snakes[0].id
-    )
-  );
-};
+  if (this.children.length === 0) {
+    for (const move of getLegalMoves(node.state.snakes[0])) {
+      const newState = generateNewState(node.state, move);
+      node.addChild(new Node(newState, node));
+    }
+  }
 
-const isTerminal = (state) => {
-  return state.snakes.length === 1;
+  const bestChild = select(node);
+  if (bestChild === null) {
+    return evaluation(currentState.snakes, currentState.snakes);
+  }
+
+  return simulate(bestChild, depth + 1);
 };
 
 const backpropagate = (node, result) => {

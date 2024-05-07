@@ -1,4 +1,4 @@
-export const generateNewBoard = (board, snakeId, move) => {
+export const generateNewState = (board, snakeId, move) => {
   // Create a deep copy of the board
   const newBoard = JSON.parse(JSON.stringify(board));
 
