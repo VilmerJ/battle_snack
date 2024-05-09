@@ -24,9 +24,9 @@ function info() {
   return {
     apiversion: "1",
     author: "VilmerJ", // Your Battlesnake Username
-    color: "#888888", // Choose color
-    head: "default", // Choose head
-    tail: "default", // Choose tail
+    color: "#736CCB", // Choose color
+    head: "workout", // Choose head
+    tail: "skinny", // Choose tail
   };
 }
 
