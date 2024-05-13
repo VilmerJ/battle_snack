@@ -15,6 +15,7 @@ class Node {
     this.visits = 0;
     this.score = 0;
     this.turn = turn;
+    this.isTerminal = isTerminal(state);
   }
 
   addChild(child) {
@@ -51,7 +52,7 @@ export const monteCarloTreeSearch = (state) => {
   while (Date.now() - start < MAX_TIME) {
     let node = select(root); // 1. Selection (leaf node which maximizes UCB1)
     // 2. Exapnd node if we have visited it before
-    if (node.children.length === 0 && node.visits > 0) {
+    if (node.children.length === 0 && node.visits > 0 && !node.isTerminal) {
       expand(node);
       // Select one of the children
       node = select(node);
@@ -147,25 +148,34 @@ const select = (node) => {
 
 // 2. Expands a node with the elligble moves
 const expand = (node) => {
-  // Iterate over the legal moves
+  // Select the right team
   const ourSnakes =
     node.turn % 2 === 0 ? node.state.ourSnakes : node.state.enemySnakes;
 
   // 1. Generate legal moves for snake 1.1
   const movesObj = getLegalMoves(node.state, ourSnakes[0].id);
-  const moves = Object.keys(movesObj.filter((key) => movesObj[key]));
+  const moves = Object.keys(movesObj).filter((key) => movesObj[key]);
 
   // 2. Generate the next states s2.1 based on the moves
   const states = moves.map((move) =>
     generateNewState(node.state, ourSnakes[0].id, move, node.turn)
   );
 
+  if (ourSnakes.length === 1) {
+    const children = states.map(
+      (state) => new Node(state, node.turn + 1, node)
+    );
+
+    node.children = children;
+    return;
+  }
+
   // 4. Generate the next states s2.2 based on the moves of snake 2
   const states2 = [];
   for (const state of states) {
     // 3. Get the legal moves for snake 1.2 on states s2.1
     const moves2Obj = getLegalMoves(node.state, ourSnakes[1].id);
-    const moves2 = Object.keys(moves2Obj.filter((key) => moves2Obj[key]));
+    const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
 
     moves2.forEach((move) => {
       states2.push(generateNewState(state, ourSnakes[1].id, move, node.turn));
@@ -197,7 +207,7 @@ const simulate = (node, depth, startTime) => {
     // 1. Generate legal moves for snake 1.1
     const movesObj = getLegalMoves(tempNode.state, ourSnakes[0].id);
 
-    const moves = Object.keys(movesObj.filter((key) => movesObj[key]));
+    const moves = Object.keys(movesObj).filter((key) => movesObj[key]);
     const move = moves[Math.floor(Math.random() * moves.length)];
 
     // 2. Generate the next states s2.1 based on the moves

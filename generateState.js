@@ -22,20 +22,20 @@ export const generateNewState = (state, snakeId, move, turn) => {
 };
 
 const moveSnake = (state, move, snake) => {
-  const newHead = moveHead(newSnake.head, move);
-  newSnake.body = [newHead, ...newSnake.body];
-  newSnake.head = newHead;
+  const newHead = moveHead(snake.head, move);
+  snake.body = [newHead, ...snake.body];
+  snake.head = newHead;
 
   const ateFood = state.food.some(
     (food) => food.x === newHead.x && food.y === newHead.y
   );
 
   if (!ateFood) {
-    newSnake.body.pop();
+    snake.body.pop();
     snake.health -= 1;
   } else {
-    newSnake.health = 100;
-    newSnake.length += 1;
+    snake.health = 100;
+    snake.length += 1;
 
     // Remove the food that was eaten
     state.food = state.food.filter(
@@ -59,7 +59,5 @@ const moveHead = (head, move) => {
 
 export const isTerminal = (state) => {
   if (!state.ourSnakes || !state.enemySnakes) return true;
-  if (state.ourSnakes.length === 0 || state.enemySnakes.length === 0)
-    return true;
-  return false;
+  return !!(state.ourSnakes.length === 0 || state.enemySnakes.length === 0);
 };

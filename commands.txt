@@ -1,0 +1,1 @@
+battlesnake play --name Snake1 --url http://snake1-url-whatever --name Snake2 --url http://snake2-url-whatever
