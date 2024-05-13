@@ -10,10 +10,10 @@
 // To get you started we've included code to prevent your Battlesnake from moving backwards.
 // For more info see docs.battlesnake.com
 
-import { transformGameStateToOurState } from "./helpers.js";
+import { getLegalMoves } from "./helpers.js";
+import { evaluation } from "./evaluation.js";
 
 import runServer from "./server.js";
-import { monteCarloTreeSearch } from "./monteCarloTreeSearch.js";
 
 // info is called when you create your Battlesnake on play.battlesnake.com
 // and controls your Battlesnake's appearance
@@ -46,17 +46,41 @@ let lastMove = "up";
 // Valid moves are "up", "down", "left", or "right"
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
-  // 1. Create state object based on the api call
+  const thisEvaluation = evaluation(
+    [gameState.you],
+    gameState.board.snakes.filter((snake) => snake.id !== gameState.you.id)
+  );
+  console.log(`EVALUATION: ${thisEvaluation}`);
 
-  console.log(gameState);
-  console.log("snakes: ");
+  let isMoveSafe = getLegalMoves(
+    gameState.you.body,
+    gameState.board.width,
+    gameState.board.height,
+    gameState.board.snakes
+  );
 
-  const state = transformGameStateToOurState(gameState);
+  // Are there any safe moves left?
+  const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
+  if (safeMoves.length == 0) {
+    console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
+    return { move: "down" };
+  }
 
-  const bestMove = monteCarloTreeSearch(state);
+  // Choose a random move from the safe moves
+  let nextMove;
+  if (safeMoves.includes(lastMove)) {
+    nextMove = lastMove;
+  } else {
+    nextMove = safeMoves[0];
+  }
 
-  console.log(`MOVE ${gameState.turn}: ${bestMove}`);
-  return { move: bestMove };
+  lastMove = nextMove;
+
+  // TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
+  // food = gameState.board.food;
+
+  console.log(`MOVE ${gameState.turn}: ${nextMove}`);
+  return { move: nextMove };
 }
 
 runServer({

@@ -1,75 +1,65 @@
-export const generateNewState = (board, snakeId, move) => {
+export const generateNewState = (state, snakeId, move, turn) => {
   // Create a deep copy of the board
-  const newBoard = JSON.parse(JSON.stringify(board));
+  const newState = JSON.parse(JSON.stringify(state));
+  const ourSnakes = turn % 2 === 0 ? newState.ourSnakes : newState.enemySnakes;
 
-  // Update the board with the new snake position
-  const newSnake = moveSnake(
-    newBoard.snakes.find((snake) => snake.id === snakeId),
-    move,
-    newBoard.food
-  );
+  // Find the snake that is moving
+  const snake = ourSnakes.find((snake) => snake.id === snakeId);
 
-  // Update snake positions on the board
-  newBoard.snakes = newBoard.snakes.map((snake) =>
-    snake.id === snakeId ? newSnake : snake
-  );
-
-  return newBoard;
-};
-
-// Update the snake's body and head
-export const moveSnake = (snake, move, foodPositions) => {
-  const newSnake = JSON.parse(JSON.stringify(snake));
-
-  // Update the snake's body
-  newSnake.body = moveSnakeBody(newSnake, move, foodPositions);
-
-  // Update the snake's head
-  newSnake.head = newSnake.body[0];
-
-  return newSnake;
-};
-
-// Update the snak
-export const moveSnakeBody = (newSnake, move, foodPositions) => {
-  const newBody = JSON.parse(JSON.stringify(newSnake.body));
-
-  // Insert the new head at the front of the body
-  newBody.unshift(moveSnakeHead(newBody[0], move));
-
-  let foodEatenIndex = foodPositions.findIndex(
-    (food) => food.x === newBody[0].x && food.y === newBody[0].y
-  );
-  if (foodEatenIndex !== -1) {
-    // If the snake eats food
-    newSnake.health = 100;
-    foodPositions.splice(foodEatenIndex, 1);
-    return newBody;
+  // If the snake is dead we remove the snake and return the new state
+  if (snake.dead) {
+    const newSnakes = ourSnakes.filter((snake) => snake.id !== snakeId);
+    if (turn % 2 === 0) {
+      newState.ourSnakes = newSnakes;
+    } else {
+      newState.enemySnakes = newSnakes;
+    }
+    return newState;
   }
 
-  // If the snake doesn't eat food
-  newSnake.health -= 1;
-  newBody.pop();
-  return newBody;
+  moveSnake(newState, move, snake);
+  return newState;
 };
 
-export const moveSnakeHead = (head, move) => {
-  const newHead = JSON.parse(JSON.stringify(head));
+const moveSnake = (state, move, snake) => {
+  const newHead = moveHead(newSnake.head, move);
+  newSnake.body = [newHead, ...newSnake.body];
+  newSnake.head = newHead;
 
+  const ateFood = state.food.some(
+    (food) => food.x === newHead.x && food.y === newHead.y
+  );
+
+  if (!ateFood) {
+    newSnake.body.pop();
+    snake.health -= 1;
+  } else {
+    newSnake.health = 100;
+    newSnake.length += 1;
+
+    // Remove the food that was eaten
+    state.food = state.food.filter(
+      (food) => food.x !== newHead.x || food.y !== newHead.y
+    );
+  }
+};
+
+const moveHead = (head, move) => {
   switch (move) {
     case "up":
-      newHead.y += 1;
-      break;
+      return { x: head.x, y: head.y + 1 };
     case "down":
-      newHead.y -= 1;
-      break;
+      return { x: head.x, y: head.y - 1 };
     case "left":
-      newHead.x -= 1;
-      break;
+      return { x: head.x - 1, y: head.y };
     case "right":
-      newHead.x += 1;
-      break;
+      return { x: head.x + 1, y: head.y };
   }
+};
 
-  return newHead;
+export const isTerminal = (state) => {
+  if (!state.ourSnakes || !state.enemySnakes) return true;
+  if (state.ourSnakes.length === 0 || state.enemySnakes.length === 0)
+    return true;
+  return false;
 };

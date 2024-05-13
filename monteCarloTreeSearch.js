@@ -1,13 +1,11 @@
-import { generateNewState } from "./generateState";
-import { getLegalMoves } from "./helpers";
-import { evaluation } from "./evaluation";
+import { generateNewState, isTerminal } from "./generateState.js";
+import { getLegalMoves } from "./helpers.js";
+import { evaluation } from "./evaluation.js";
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
 const MAX_SIMULATIONS_DEPTH = 40;
 const MAX_TIME = 200; // 100 ms
-let numberOfSimulations = 0;
-
-
+let maxDepthReached = 0;
 
 class Node {
   constructor(state, turn, parent = null) {
@@ -18,11 +16,11 @@ class Node {
     this.score = 0;
     this.turn = turn;
   }
-  
+
   addChild(child) {
     this.children.push(child);
   }
-  
+
   reCalculateScore() {
     const totalScore = this.children.reduce((acc, child) => {
       return acc + child.score;
@@ -31,11 +29,11 @@ class Node {
   }
 }
 
-// Algorithm contains 4 major steps: https://www.youtube.com/watch?v=UXW2yZndl7U 
+// Algorithm contains 4 major steps: https://www.youtube.com/watch?v=UXW2yZndl7U
 // 1. Selection: Start from the root and succesively chose children until a leaf node L is reached
 // Nodes are chosen based on their UCB1 value
 
-// 2. Expansion: If the node L has not been visited we jump directly to the simulation. 
+// 2. Expansion: If the node L has not been visited we jump directly to the simulation.
 // If it has been visited before we first expand it (if it has not been expanded)
 // We then find the child which maximizes UCB1 (go back to 1 with L as root)
 
@@ -43,38 +41,43 @@ class Node {
 // Perform a rollout where random moves are chosen until an exit criteria is met or the game ends
 // Evaluate this final state
 
-
 // 4. Backpropogation: Use the result of the playout to update infromation in the nodes on the path from C to R
-// Each node has a score (cumulative) and a number of visits 
+// Each node has a score (cumulative) and a number of visits
 
 export const monteCarloTreeSearch = (state) => {
-  const root = new Node(state);
-  const start = Date.now(); 
-
+  const root = new Node(state, 0, null);
+  const start = Date.now();
+  let numberOfSimulations = 0;
   while (Date.now() - start < MAX_TIME) {
-    const node = select(root); // 1. Selection (leaf node which maximizes UCB1)
+    let node = select(root); // 1. Selection (leaf node which maximizes UCB1)
     // 2. Exapnd node if we have visited it before
     if (node.children.length === 0 && node.visits > 0) {
       expand(node);
       // Select one of the children
       node = select(node);
     }
-    const result = simulate(node.state, 0); // 3. Simulate from the selected node
+    const result = simulate(node, 0); // 3. Simulate from the selected node
     backpropagate(node, result); // 4. Backpropagation
-    numberOfSimulations ++; // Increment number of simulations
+    numberOfSimulations++; // Increment number of simulations
   }
-
-  return bestChild(root).state;
+  console.log("Performed simulations: ", numberOfSimulations);
+  console.log("Max depth reached: ", maxDepthReached / 2);
+  return bestChild(root);
 };
 
 // %%%%%%%%%% Util functions %%%%%%%%%%
 
 // UCB1 formula
-const UCB1 = (node) =>{
-      // Nodes that have not been visited are preferred over others
-      const score = node.visits === 0 ? Infinity :  node.score + EXPLORATION_CONSTANT * Math.sqrt(Math.log(node.parent.visits) / child.visits); 
-      return score;
-}
+const UCB1 = (node) => {
+  // Nodes that have not been visited are preferred over others
+  const score =
+    node.visits === 0
+      ? Infinity
+      : node.score +
+        EXPLORATION_CONSTANT *
+          Math.sqrt(Math.log(node.parent.visits) / child.visits);
+  return score;
+};
 
 // Returns the child of a node which maximizes the UCB1 formula
 const bestUCT = (node) => {
@@ -82,15 +85,15 @@ const bestUCT = (node) => {
   let bestUCT = -Infinity;
 
   for (const child of node.children) {
-      const uct = UCB1(child);
-      // Kan man göra såhär?
-      if (uct === Infinity) {
-        bestUCT = uct;
-        bestChild = child;
-        break;
-      }else if (UCB1(child) > bestUCT) {
-        bestUCT = uct;
-        bestChild = child;
+    const uct = UCB1(child);
+    // Kan man göra såhär?
+    if (uct === Infinity) {
+      bestUCT = uct;
+      bestChild = child;
+      break;
+    } else if (UCB1(child) > bestUCT) {
+      bestUCT = uct;
+      bestChild = child;
     }
   }
 
@@ -101,7 +104,7 @@ const bestUCT = (node) => {
 const bestChild = (node) => {
   let bestChild = null;
   let bestScore = -Infinity;
-  
+
   for (const child of node.children) {
     const score = child.score / child.visits;
     if (score > bestScore) {
@@ -110,9 +113,24 @@ const bestChild = (node) => {
     }
   }
 
-  return bestChild;
-};
+  const ourPos = node.state.ourSnakes[0].head;
+  if (bestChild.state.ourSnakes.length === 0) {
+    return "up";
+  }
 
+  const ourNextPos = bestChild.state.ourSnakes[0].head;
+
+  const move =
+    ourPos.x === ourNextPos.x
+      ? ourPos.y > ourNextPos.y
+        ? "up"
+        : "down"
+      : ourPos.x > ourNextPos.x
+      ? "right"
+      : "left";
+
+  return move;
+};
 
 // 1. Selection:
 //  Returns the child which maximizes UCB1
@@ -127,35 +145,102 @@ const select = (node) => {
   return select(bestChild);
 };
 
-
 // 2. Expands a node with the elligble moves
-const expand = (node) =>{
+const expand = (node) => {
   // Iterate over the legal moves
-  for (const move of getLegalMoves(node.state.snakes[0])) { // Requires additional arguments (?)
-    const newState = generateNewState(node.state, move);
-    const child = new Node(newState, node);
-    node.addChild(child);
-  }
-}
+  const ourSnakes =
+    node.turn % 2 === 0 ? node.state.ourSnakes : node.state.enemySnakes;
 
-// 3. Simulation until we reach an end node or exit criteria is met
-const simulate = (node,depth, startTime) => {
-  
-  // Simulate until stop criterion is reached
-  while (depth < MAX_SIMULATIONS_DEPTH) {
-    
-    // Get possible moves
-    const possibleMoves = getLegalMoves(node.body.state.snakes[0]); // this is very wrong function call
-    // We have reached a terminal state -> return evaluation
-    if (possibleMoves.length === 0) {
-      break;
-    }
-    
-    const randomMove = possibleMoves[Math.random() * (Math.floor(possibleMoves.length))];
-    node = new Node(generateNewState(node.state, 0, randomMove)); // Incorrect function call
+  // 1. Generate legal moves for snake 1.1
+  const movesObj = getLegalMoves(node.state, ourSnakes[0].id);
+  const moves = Object.keys(movesObj.filter((key) => movesObj[key]));
+
+  // 2. Generate the next states s2.1 based on the moves
+  const states = moves.map((move) =>
+    generateNewState(node.state, ourSnakes[0].id, move, node.turn)
+  );
+
+  // 4. Generate the next states s2.2 based on the moves of snake 2
+  const states2 = [];
+  for (const state of states) {
+    // 3. Get the legal moves for snake 1.2 on states s2.1
+    const moves2Obj = getLegalMoves(node.state, ourSnakes[1].id);
+    const moves2 = Object.keys(moves2Obj.filter((key) => moves2Obj[key]));
+
+    moves2.forEach((move) => {
+      states2.push(generateNewState(state, ourSnakes[1].id, move, node.turn));
+    });
   }
-  return evaluation(node.state); // Incorrect function call
-}
+
+  // 5. Create the nodes for the states s2.2
+  const children = states2.map((state) => new Node(state, node.turn + 1, node));
+
+  // 6. Add the children to the parent node
+  node.children = children;
+};
+
+//3. Simulation until we reach an end node or exit criteria is met
+const simulate = (node, depth, startTime) => {
+  // Simulate until stop criterion is reached
+
+  let tempNode = JSON.parse(JSON.stringify(node));
+  console.log("node: ", tempNode);
+  console.log("state: ", tempNode.state);
+
+  while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !isTerminal(tempNode.state)) {
+    // Get possible moves
+    const ourSnakes =
+      tempNode.turn % 2 === 0
+        ? tempNode.state.ourSnakes
+        : tempNode.state.enemySnakes;
+
+    // 1. Generate legal moves for snake 1.1
+    const movesObj = getLegalMoves(tempNode.state, ourSnakes[0].id);
+
+    const moves = Object.keys(movesObj.filter((key) => movesObj[key]));
+    const move = moves[Math.floor(Math.random() * moves.length)];
+
+    // 2. Generate the next states s2.1 based on the moves
+    const state = generateNewState(
+      tempNode.state,
+      ourSnakes[0].id,
+      move,
+      tempNode.turn
+    );
+
+    // 3. Get the legal moves for snake 1.2 on states s2.1
+    const moves2 = getLegalMoves(state, ourSnakes[1].id);
+    const move2 = moves2[Math.floor(Math.random() * moves2.length)];
+
+    // 4. Generate the next states s2.2 based on the moves of snake 2
+    const state2 = generateNewState(
+      state,
+      ourSnakes[1].id,
+      move2,
+      tempNode.turn
+    );
+
+    // 5. Create the nodes for the states s2.2
+    tempNode = new Node(state2, tempNode.turn + 1);
+  }
+
+  // Benchmark search depth
+  if (tempNode.turn > maxDepthReached) {
+    maxDepthReached = tempNode.turn;
+  }
+
+  if (tempNode.turn % 2 === 0) {
+    return evaluation(
+      tempNode.state.ourSnakes ?? [],
+      tempNode.state.enemySnakes ?? []
+    );
+  } else {
+    return evaluation(
+      tempNode.state.enemySnakes ?? [],
+      tempNode.state.ourSnakes ?? []
+    );
+  }
+};
 
 // 4. Backpropagation
 const backpropagate = (node, result) => {
