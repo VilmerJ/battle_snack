@@ -48,9 +48,6 @@ let lastMove = "up";
 function move(gameState) {
   // 1. Create state object based on the api call
 
-  console.log(gameState);
-  console.log("snakes: ");
-
   const state = transformGameStateToOurState(gameState);
 
   const bestMove = monteCarloTreeSearch(state);

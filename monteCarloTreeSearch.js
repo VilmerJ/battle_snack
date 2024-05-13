@@ -3,8 +3,8 @@ import { getLegalMoves } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
-const MAX_SIMULATIONS_DEPTH = 40;
-const MAX_TIME = 200; // 100 ms
+const MAX_SIMULATIONS_DEPTH = 100;
+const MAX_TIME = 300; // 100 ms
 let maxDepthReached = 0;
 
 class Node {
@@ -61,6 +61,10 @@ export const monteCarloTreeSearch = (state) => {
     backpropagate(node, result); // 4. Backpropagation
     numberOfSimulations++; // Increment number of simulations
   }
+  console.log(
+    "Average simulation time: ",
+    (Date.now() - start) / numberOfSimulations
+  );
   console.log("Performed simulations: ", numberOfSimulations);
   console.log("Max depth reached: ", maxDepthReached / 2);
   return bestChild(root);
@@ -76,7 +80,7 @@ const UCB1 = (node) => {
       ? Infinity
       : node.score +
         EXPLORATION_CONSTANT *
-          Math.sqrt(Math.log(node.parent.visits) / child.visits);
+          Math.sqrt(Math.log(node.parent.visits) / node.visits);
   return score;
 };
 
@@ -193,10 +197,7 @@ const expand = (node) => {
 const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
 
-  let tempNode = JSON.parse(JSON.stringify(node));
-  console.log("node: ", tempNode);
-  console.log("state: ", tempNode.state);
-
+  let tempNode = new Node(node.state, node.turn);
   while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !isTerminal(tempNode.state)) {
     // Get possible moves
     const ourSnakes =
@@ -218,8 +219,14 @@ const simulate = (node, depth, startTime) => {
       tempNode.turn
     );
 
+    if (ourSnakes.length === 1) {
+      tempNode = new Node(state, tempNode.turn + 1);
+      continue;
+    }
+
     // 3. Get the legal moves for snake 1.2 on states s2.1
-    const moves2 = getLegalMoves(state, ourSnakes[1].id);
+    const moves2Obj = getLegalMoves(state, ourSnakes[1].id);
+    const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
     const move2 = moves2[Math.floor(Math.random() * moves2.length)];
 
     // 4. Generate the next states s2.2 based on the moves of snake 2
@@ -239,17 +246,22 @@ const simulate = (node, depth, startTime) => {
     maxDepthReached = tempNode.turn;
   }
 
-  if (tempNode.turn % 2 === 0) {
-    return evaluation(
-      tempNode.state.ourSnakes ?? [],
-      tempNode.state.enemySnakes ?? []
-    );
-  } else {
-    return evaluation(
-      tempNode.state.enemySnakes ?? [],
-      tempNode.state.ourSnakes ?? []
-    );
-  }
+  return evaluation(
+    tempNode.state.ourSnakes ?? [],
+    tempNode.state.enemySnakes ?? []
+  );
+
+  // if (tempNode.turn % 2 === 0) {
+  //   return evaluation(
+  //     tempNode.state.ourSnakes ?? [],
+  //     tempNode.state.enemySnakes ?? []
+  //   );
+  // } else {
+  //   return evaluation(
+  //     tempNode.state.enemySnakes ?? [],
+  //     tempNode.state.ourSnakes ?? []
+  //   );
+  // }
 };
 
 // 4. Backpropagation

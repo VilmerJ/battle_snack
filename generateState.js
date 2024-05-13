@@ -7,7 +7,7 @@ export const generateNewState = (state, snakeId, move, turn) => {
   const snake = ourSnakes.find((snake) => snake.id === snakeId);
 
   // If the snake is dead we remove the snake and return the new state
-  if (snake.dead) {
+  if (move === "death") {
     const newSnakes = ourSnakes.filter((snake) => snake.id !== snakeId);
     if (turn % 2 === 0) {
       newState.ourSnakes = newSnakes;
