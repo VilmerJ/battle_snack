@@ -127,10 +127,10 @@ const bestChild = (node) => {
 
   const move =
     ourPos.x === ourNextPos.x
-      ? ourPos.y > ourNextPos.y
+      ? ourPos.y < ourNextPos.y
         ? "up"
         : "down"
-      : ourPos.x > ourNextPos.x
+      : ourPos.x < ourNextPos.x
       ? "right"
       : "left";
 
@@ -197,7 +197,7 @@ const expand = (node) => {
 const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
 
-  let tempNode = new Node(node.state, node.turn);
+  let tempNode = new Node(JSON.parse(JSON.stringify(node.state)), node.turn);
   while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !isTerminal(tempNode.state)) {
     // Get possible moves
     const ourSnakes =
