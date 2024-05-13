@@ -10,7 +10,7 @@
 // To get you started we've included code to prevent your Battlesnake from moving backwards.
 // For more info see docs.battlesnake.com
 
-import { getLegalMoves } from "./dummyHelper.js";
+import { getLegalMoves, transformGameStateToOurState } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
 
 import runServer from "./server.js";
@@ -46,22 +46,20 @@ let lastMove = "up";
 // Valid moves are "up", "down", "left", or "right"
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
-  const thisEvaluation = evaluation(
-    [gameState.you],
-    gameState.board.snakes.filter((snake) => snake.id !== gameState.you.id)
-  );
-  console.log(`EVALUATION: ${thisEvaluation}`);
+  // const thisEvaluation = evaluation(
+  //   [gameState.you],
+  //   gameState.board.snakes.filter((snake) => snake.id !== gameState.you.id)
+  // );
+  // console.log(`EVALUATION: ${thisEvaluation}`);
 
-  let isMoveSafe = getLegalMoves(
-    gameState.you.body,
-    gameState.board.width,
-    gameState.board.height,
-    gameState.board.snakes
-  );
+  const state = transformGameStateToOurState(gameState);
+  const isMoveSafe = getLegalMoves(state, gameState.you.id);
+
+  console.log(isMoveSafe);
 
   // Are there any safe moves left?
   const safeMoves = Object.keys(isMoveSafe).filter((key) => isMoveSafe[key]);
-  if (safeMoves.length == 0) {
+  if (safeMoves[0] === "death") {
     console.log(`MOVE ${gameState.turn}: No safe moves detected! Moving down`);
     return { move: "down" };
   }
