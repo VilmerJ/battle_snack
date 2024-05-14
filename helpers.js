@@ -75,10 +75,10 @@ export const transformGameStateToOurState = (gameState) => {
     height: gameState.board.height,
     food: gameState.board.food,
     ourSnakes: gameState.board.snakes.filter(
-      (snake) => snake.name === "VilmerJ"
+      (snake) => snake.name === "VilmerJ" || snake.name === "TorS"
     ),
     enemySnakes: gameState.board.snakes.filter(
-      (snake) => snake.name !== "VilmerJ"
+      (snake) => snake.name !== "VilmerJ" && snake.name !== "TorS"
     ),
   };
 
