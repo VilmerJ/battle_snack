@@ -3,9 +3,13 @@ import { getLegalMoves, purgeSnakes } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
-const MAX_SIMULATIONS_DEPTH = 100;
-const MAX_TIME = 300; // 100 ms
+const MAX_SIMULATIONS_DEPTH = 50;
+const MAX_TIME = 400; // 100 ms
 let maxDepthReached = 0;
+let getLegalMovesCounter = 0;
+let getLegalMovesTime = 0;
+let generateStateCounter = 0;
+let generateStateTime = 0;
 
 class Node {
   constructor(state, turn, parent = null) {
@@ -46,8 +50,14 @@ class Node {
 // Each node has a score (cumulative) and a number of visits
 
 export const monteCarloTreeSearch = (state) => {
-  const root = new Node(state, 0, null);
+  maxDepthReached = 0;
+  generateStateCounter = 0;
+  generateStateTime = 0;
+  getLegalMovesCounter = 0;
+  getLegalMovesTime = 0;
+
   const start = Date.now();
+  const root = new Node(state, 0, null);
   let numberOfSimulations = 0;
   while (Date.now() - start < MAX_TIME) {
     let node = select(root); // 1. Selection (leaf node which maximizes UCB1)
@@ -67,6 +77,23 @@ export const monteCarloTreeSearch = (state) => {
   );
   console.log("Performed simulations: ", numberOfSimulations);
   console.log("Max depth reached: ", maxDepthReached / 2);
+  console.log("Time spent on MCTS: ", Date.now() - start);
+  console.log(
+    "Time spent on generating states: ",
+    generateStateTime,
+    " Calls: ",
+    generateStateCounter,
+    " Average time: ",
+    generateStateTime / generateStateCounter
+  );
+  console.log(
+    "Time spent on finding legal moves: ",
+    getLegalMovesTime,
+    " Calls: ",
+    getLegalMovesCounter,
+    " Average time: ",
+    getLegalMovesTime / getLegalMovesCounter
+  );
   return bestChild(root);
 };
 
@@ -157,13 +184,20 @@ const expand = (node) => {
     node.turn % 2 === 0 ? node.state.ourSnakes : node.state.enemySnakes;
 
   // 1. Generate legal moves for snake 1.1
+  let legalMoveStart = Date.now();
   const movesObj = getLegalMoves(node.state, ourSnakes[0].id, node.turn);
+  getLegalMovesCounter++;
+  getLegalMovesTime += Date.now() - legalMoveStart;
+
   const moves = Object.keys(movesObj).filter((key) => movesObj[key]);
 
   // 2. Generate the next states s2.1 based on the moves
+  let stateStart = Date.now();
   const states = moves.map((move) =>
     generateNewState(node.state, ourSnakes[0].id, move, node.turn)
   );
+  generateStateCounter += states.length;
+  generateStateTime += Date.now() - stateStart;
 
   if (ourSnakes.length === 1) {
     const children = states.map(
@@ -178,12 +212,18 @@ const expand = (node) => {
   const states2 = [];
   for (const state of states) {
     // 3. Get the legal moves for snake 1.2 on states s2.1
+    legalMoveStart = Date.now();
     const moves2Obj = getLegalMoves(node.state, ourSnakes[1].id, node.turn);
-    const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
+    getLegalMovesCounter++;
+    getLegalMovesTime += Date.now() - legalMoveStart;
 
+    const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
+    stateStart = Date.now();
     moves2.forEach((move) => {
       states2.push(generateNewState(state, ourSnakes[1].id, move, node.turn));
     });
+    generateStateCounter += moves2.length;
+    generateStateTime += Date.now() - stateStart;
   }
 
   // 4.5 Purge colliding snakes in the states
@@ -209,22 +249,28 @@ const simulate = (node, depth, startTime) => {
         : tempNode.state.enemySnakes;
 
     // 1. Generate legal moves for snake 1.1
+    let legalMovesStart = Date.now();
     const movesObj = getLegalMoves(
       tempNode.state,
       ourSnakes[0].id,
       tempNode.turn
     );
+    getLegalMovesCounter++;
+    getLegalMovesTime += Date.now() - legalMovesStart;
 
     const moves = Object.keys(movesObj).filter((key) => movesObj[key]);
     const move = moves[Math.floor(Math.random() * moves.length)];
 
     // 2. Generate the next states s2.1 based on the moves
+    let generateStateStart = Date.now();
     const state = generateNewState(
       tempNode.state,
       ourSnakes[0].id,
       move,
       tempNode.turn
     );
+    generateStateCounter++;
+    generateStateTime += Date.now() - generateStateStart;
 
     if (ourSnakes.length === 1) {
       tempNode = new Node(state, tempNode.turn + 1);
@@ -232,18 +278,24 @@ const simulate = (node, depth, startTime) => {
     }
 
     // 3. Get the legal moves for snake 1.2 on states s2.1
+    legalMovesStart = Date.now();
     const moves2Obj = getLegalMoves(state, ourSnakes[1].id, tempNode.turn);
+    getLegalMovesCounter++;
+    getLegalMovesTime += Date.now() - legalMovesStart;
+
     const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
     const move2 = moves2[Math.floor(Math.random() * moves2.length)];
 
     // 4. Generate the next states s2.2 based on the moves of snake 2
+    generateStateStart = Date.now();
     const state2 = generateNewState(
       state,
       ourSnakes[1].id,
       move2,
       tempNode.turn
     );
-
+    generateStateCounter++;
+    generateStateTime += Date.now() - generateStateStart;
     // 4.5 Purge colliding snakes
     purgeSnakes(state2);
 
@@ -266,7 +318,7 @@ const simulate = (node, depth, startTime) => {
 const backpropagate = (node, result) => {
   while (node !== null) {
     node.visits += 1;
-    node.score += result;
+    node.score += node.turn % 2 == 0 ? -result : result; // We want to maximize the score of the first player
     node = node.parent;
   }
 };

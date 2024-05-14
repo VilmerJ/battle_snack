@@ -1,57 +1,34 @@
 export const generateNewState = (state, snakeId, move, turn) => {
   // Create a deep copy of the board
-  const newState = JSON.parse(JSON.stringify(state));
+  const newState = deepCopy(state);
   const ourSnakes = turn % 2 === 0 ? newState.ourSnakes : newState.enemySnakes;
 
   // Find the snake that is moving
-  const snake = ourSnakes.find((snake) => snake.id === snakeId);
+  const snakeIndex = ourSnakes.findIndex((snake) => snake.id === snakeId);
+  const snake = ourSnakes[snakeIndex];
 
   // If the snake is dead we remove the snake and return the new state
   if (move === "death") {
-    const newSnakes = ourSnakes.filter((snake) => snake.id !== snakeId);
-    if (turn % 2 === 0) {
-      newState.ourSnakes = newSnakes;
-    } else {
-      newState.enemySnakes = newSnakes;
-    }
+    ourSnakes.splice(snakeIndex, 1);
     return newState;
   }
 
   moveSnake(newState, move, snake);
-
-  // Iterate over our snakes snakes
-  // If two snakes have the same head position, remove the shortest one, or both if the length is the same
-  for (
-    let ourSnakesIndex1 = 0;
-    ourSnakesIndex1 < newState.ourSnakes.length;
-    ourSnakesIndex1++
-  ) {
-    for (
-      let ourSnakesIndex2 = 0;
-      ourSnakesIndex2 < newState.ourSnakes.length;
-      ourSnakesIndex2++
-    ) {
-      if (
-        ourSnakesIndex1 !== ourSnakesIndex2 &&
-        newState.ourSnakes[ourSnakesIndex1].head ===
-          newState.ourSnakes[ourSnakesIndex2].head
-      ) {
-        // remove the snake with the given ID
-      }
-    }
-  }
-
   return newState;
 };
 
 const moveSnake = (state, move, snake) => {
   const newHead = moveHead(snake.head, move);
-  snake.body = [newHead, ...snake.body];
+  snake.body.unshift(newHead);
   snake.head = newHead;
 
-  const ateFood = state.food.some(
-    (food) => food.x === newHead.x && food.y === newHead.y
-  );
+  const ateFood = state.food.some((food, index) => {
+    if (food.x === newHead.x && food.y === newHead.y) {
+      state.food.splice(index, 1); // Remove the food from the board
+      return true;
+    }
+    return false;
+  });
 
   if (!ateFood) {
     snake.body.pop();
@@ -59,11 +36,6 @@ const moveSnake = (state, move, snake) => {
   } else {
     snake.health = 100;
     snake.length += 1;
-
-    // Remove the food that was eaten
-    state.food = state.food.filter(
-      (food) => food.x !== newHead.x || food.y !== newHead.y
-    );
   }
 };
 
@@ -78,6 +50,19 @@ const moveHead = (head, move) => {
     case "right":
       return { x: head.x + 1, y: head.y };
   }
+};
+
+const deepCopy = (obj) => {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+  const copy = Array.isArray(obj) ? [] : {};
+  for (let key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      copy[key] = deepCopy(obj[key]);
+    }
+  }
+  return copy;
 };
 
 export const isTerminal = (state) => {

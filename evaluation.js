@@ -15,5 +15,5 @@ export const evaluation = (ourSnakes, enemySnakes) => {
     enemyHP += snake.health;
   }
 
-  return ourLength - enemyLength + ourHP - enemyHP;
+  return 10 * (ourLength - enemyLength) + ourHP - enemyHP;
 };

@@ -45,11 +45,12 @@ function end(gameState) {
 // See https://docs.battlesnake.com/api/example-move for available data
 function move(gameState) {
   // 1. Create state object based on the api call
-
+  const start = Date.now();
   const state = transformGameStateToOurState(gameState);
   const bestMove = monteCarloTreeSearch(state);
 
   console.log(`MOVE ${gameState.turn}: ${bestMove}`);
+  console.log("Tick Time: ", Date.now() - start);
   return { move: bestMove };
 }
 
