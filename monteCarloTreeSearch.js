@@ -1,6 +1,8 @@
-import { generateNewState, isTerminal } from "./generateState.js";
+import { deepCopy, generateNewState, isTerminal } from "./generateState.js";
 import { getLegalMoves, purgeSnakes } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
+import pkg from "lodash";
+const { cloneDeep } = pkg;
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
 const MAX_SIMULATIONS_DEPTH = 50;
@@ -233,7 +235,7 @@ const expand = (node) => {
 const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
 
-  let tempNode = new Node(JSON.parse(JSON.stringify(node.state)), node.turn);
+  let tempNode = new Node(deepCopy(node.state), node.turn);
   while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !isTerminal(tempNode.state)) {
     // Get possible moves
     const ourSnakes =

@@ -77,6 +77,7 @@ export const getLegalMoves = (state, id, turn) => {
     }
   }
 
+  // We die if no moves are safe
   if (!Object.values(isMoveSafe).some((value) => value)) {
     isMoveSafe.death = true;
   }
@@ -97,10 +98,10 @@ export const transformGameStateToOurState = (gameState) => {
     ),
   };
 
-  const ourSnake = gameState.board.snakes.find(
+  const ourSnake = state.ourSnakes.find(
     (snake) => snake.id === gameState.you.id
   );
-  const ourOtherSnakes = gameState.board.snakes.filter(
+  const ourOtherSnakes = state.ourSnakes.filter(
     (snake) => snake.id !== gameState.you.id
   );
   state.ourSnakes = [ourSnake, ...ourOtherSnakes];
@@ -113,7 +114,7 @@ export const purgeSnakes = (state) => {
 
   const allSnakes = [...ourSnakes, ...enemySnakes];
 
-  // Iterate over all snakes snakes, if two snakes have the
+  // Iterate over all snakes snakes, if two snakes have the same head position and one is longer than the other, remove the shorter snake
 
   const filteredSnakes = allSnakes.filter((snake, index, array) => {
     // Check if snake has its head in the same position as another snake's head

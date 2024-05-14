@@ -1,3 +1,6 @@
+import pkg from "lodash";
+const { cloneDeep } = pkg;
+
 export const generateNewState = (state, snakeId, move, turn) => {
   // Create a deep copy of the board
   const newState = deepCopy(state);
@@ -52,13 +55,13 @@ const moveHead = (head, move) => {
   }
 };
 
-const deepCopy = (obj) => {
+export const deepCopy = (obj) => {
   if (obj === null || typeof obj !== "object") {
     return obj;
   }
   const copy = Array.isArray(obj) ? [] : {};
   for (let key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (obj.hasOwnProperty(key)) {
       copy[key] = deepCopy(obj[key]);
     }
   }
