@@ -1,12 +1,12 @@
 import { deepCopy, generateNewState, isTerminal } from "./generateState.js";
 import { getLegalMoves, purgeSnakes } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
-import pkg from "lodash";
-const { cloneDeep } = pkg;
+// import pkg from "lodash";
+// const { cloneDeep } = pkg;
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
-const MAX_SIMULATIONS_DEPTH = 50;
-const MAX_TIME = 400; // 100 ms
+const MAX_SIMULATIONS_DEPTH = 24; // 12 turns for each player
+const MAX_TIME = 380; // ms
 let maxDepthReached = 0;
 let getLegalMovesCounter = 0;
 let getLegalMovesTime = 0;
