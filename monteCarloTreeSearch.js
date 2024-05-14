@@ -25,13 +25,6 @@ class Node {
   addChild(child) {
     this.children.push(child);
   }
-
-  reCalculateScore() {
-    const totalScore = this.children.reduce((acc, child) => {
-      return acc + child.score;
-    }, 0);
-    this.score = totalScore / this.visits;
-  }
 }
 
 // Algorithm contains 4 major steps: https://www.youtube.com/watch?v=UXW2yZndl7U
