@@ -1,5 +1,5 @@
 import { generateNewState, isTerminal } from "./generateState.js";
-import { getLegalMoves } from "./helpers.js";
+import { getLegalMoves, purgeSnakes } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
@@ -186,6 +186,9 @@ const expand = (node) => {
     });
   }
 
+  // 4.5 Purge colliding snakes in the states
+  states2.map((state) => purgeSnakes(state));
+
   // 5. Create the nodes for the states s2.2
   const children = states2.map((state) => new Node(state, node.turn + 1, node));
 
@@ -237,6 +240,9 @@ const simulate = (node, depth, startTime) => {
       tempNode.turn
     );
 
+    // 4.5 Purge colliding snakes
+    purgeSnakes(state2);
+
     // 5. Create the nodes for the states s2.2
     tempNode = new Node(state2, tempNode.turn + 1);
   }
@@ -250,18 +256,6 @@ const simulate = (node, depth, startTime) => {
     tempNode.state.ourSnakes ?? [],
     tempNode.state.enemySnakes ?? []
   );
-
-  // if (tempNode.turn % 2 === 0) {
-  //   return evaluation(
-  //     tempNode.state.ourSnakes ?? [],
-  //     tempNode.state.enemySnakes ?? []
-  //   );
-  // } else {
-  //   return evaluation(
-  //     tempNode.state.enemySnakes ?? [],
-  //     tempNode.state.ourSnakes ?? []
-  //   );
-  // }
 };
 
 // 4. Backpropagation

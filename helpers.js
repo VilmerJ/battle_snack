@@ -106,3 +106,30 @@ export const transformGameStateToOurState = (gameState) => {
   state.ourSnakes = [ourSnake, ...ourOtherSnakes];
   return state;
 };
+
+export const purgeSnakes = (state) => {
+  const enemySnakes = state.enemySnakes;
+  const ourSnakes = state.ourSnakes;
+
+  const allSnakes = [...ourSnakes, ...enemySnakes];
+
+  // Iterate over all snakes snakes, if two snakes have the
+
+  const filteredSnakes = allSnakes.filter((snake, index, array) => {
+    // Check if snake has its head in the same position as another snake's head
+    return !array.some((otherSnake) => {
+      return (
+        snake.id !== otherSnake.id &&
+        snake.head.x === otherSnake.head.x &&
+        snake.head.y === otherSnake.head.y &&
+        snake.length <= otherSnake.length
+      );
+    });
+  });
+
+  state.enemySnakes = filteredSnakes.filter(
+    (snake) => !ourSnakes.includes(snake)
+  );
+  state.ourSnakes = filteredSnakes.filter((snake) => ourSnakes.includes(snake));
+  return state;
+};
