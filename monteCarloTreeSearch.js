@@ -157,7 +157,7 @@ const expand = (node) => {
     node.turn % 2 === 0 ? node.state.ourSnakes : node.state.enemySnakes;
 
   // 1. Generate legal moves for snake 1.1
-  const movesObj = getLegalMoves(node.state, ourSnakes[0].id);
+  const movesObj = getLegalMoves(node.state, ourSnakes[0].id, node.turn);
   const moves = Object.keys(movesObj).filter((key) => movesObj[key]);
 
   // 2. Generate the next states s2.1 based on the moves
@@ -178,7 +178,7 @@ const expand = (node) => {
   const states2 = [];
   for (const state of states) {
     // 3. Get the legal moves for snake 1.2 on states s2.1
-    const moves2Obj = getLegalMoves(node.state, ourSnakes[1].id);
+    const moves2Obj = getLegalMoves(node.state, ourSnakes[1].id, node.turn);
     const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
 
     moves2.forEach((move) => {
@@ -209,7 +209,11 @@ const simulate = (node, depth, startTime) => {
         : tempNode.state.enemySnakes;
 
     // 1. Generate legal moves for snake 1.1
-    const movesObj = getLegalMoves(tempNode.state, ourSnakes[0].id);
+    const movesObj = getLegalMoves(
+      tempNode.state,
+      ourSnakes[0].id,
+      tempNode.turn
+    );
 
     const moves = Object.keys(movesObj).filter((key) => movesObj[key]);
     const move = moves[Math.floor(Math.random() * moves.length)];
@@ -228,7 +232,7 @@ const simulate = (node, depth, startTime) => {
     }
 
     // 3. Get the legal moves for snake 1.2 on states s2.1
-    const moves2Obj = getLegalMoves(state, ourSnakes[1].id);
+    const moves2Obj = getLegalMoves(state, ourSnakes[1].id, tempNode.turn);
     const moves2 = Object.keys(moves2Obj).filter((key) => moves2Obj[key]);
     const move2 = moves2[Math.floor(Math.random() * moves2.length)];
 
