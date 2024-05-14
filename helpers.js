@@ -1,4 +1,4 @@
-export const getLegalMoves = (state, id) => {
+export const getLegalMoves = (state, id, turn) => {
   let isMoveSafe = {
     up: true,
     down: true,
@@ -45,16 +45,31 @@ export const getLegalMoves = (state, id) => {
     right: { x: myHead.x + 1, y: myHead.y },
   };
 
+  // Iterate over snakes
   for (const snake of snakes) {
+    // Iterate over the possible new head positions
     for (const move in newHeadPositions) {
+      // If the move is not safe then we skip
       if (!isMoveSafe[move]) {
         continue;
       }
-
+      // Get the new head position
       const newHead = newHeadPositions[move];
+      // If the new head position is some other snakes body
+      // 1. For turn % 2 = 0 => cannot collide with either head or body
+      // So: turn % 2 = 0 AND pos(Head) = pos(segment) => move is unsafe
+      // 2. For turn % 2 = 1 => cannot collide with body, but can collide with head
+      // So: turn % 2 = 1 AND pos(Head) = pos(segment) AND segment != snake.head => move is unsafe
       if (
         snake.body.some(
-          (segment) => segment.x === newHead.x && segment.y === newHead.y
+          (segment) =>
+            (turn % 2 === 0 &&
+              segment.x === newHead.x &&
+              segment.y === newHead.y) ||
+            (turn % 2 === 1 &&
+              segment !== snake.head &&
+              segment.x === newHead.x &&
+              segment.y === newHead.y)
         )
       ) {
         isMoveSafe[move] = false;

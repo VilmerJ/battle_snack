@@ -18,6 +18,29 @@ export const generateNewState = (state, snakeId, move, turn) => {
   }
 
   moveSnake(newState, move, snake);
+
+  // Iterate over our snakes snakes
+  // If two snakes have the same head position, remove the shortest one, or both if the length is the same
+  for (
+    let ourSnakesIndex1 = 0;
+    ourSnakesIndex1 < newState.ourSnakes.length;
+    ourSnakesIndex1++
+  ) {
+    for (
+      let ourSnakesIndex2 = 0;
+      ourSnakesIndex2 < newState.ourSnakes.length;
+      ourSnakesIndex2++
+    ) {
+      if (
+        ourSnakesIndex1 !== ourSnakesIndex2 &&
+        newState.ourSnakes[ourSnakesIndex1].head ===
+          newState.ourSnakes[ourSnakesIndex2].head
+      ) {
+        // remove the snake with the given ID
+      }
+    }
+  }
+
   return newState;
 };
 
