@@ -236,7 +236,7 @@ const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
 
   let tempNode = new Node(deepCopy(node.state), node.turn);
-  while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !isTerminal(tempNode.state)) {
+  while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !tempNode.isTerminal) {
     // Get possible moves
     const ourSnakes =
       tempNode.turn % 2 === 0

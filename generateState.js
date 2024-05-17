@@ -70,5 +70,5 @@ export const deepCopy = (obj) => {
 
 export const isTerminal = (state) => {
   if (!state.ourSnakes || !state.enemySnakes) return true;
-  return !!(state.ourSnakes.length === 0 || state.enemySnakes.length === 0);
+  return state.ourSnakes.length === 0 || state.enemySnakes.length === 0;
 };

@@ -90,12 +90,28 @@ export const transformGameStateToOurState = (gameState) => {
     width: gameState.board.width,
     height: gameState.board.height,
     food: gameState.board.food,
-    ourSnakes: gameState.board.snakes.filter(
-      (snake) => snake.name === "VilmerJ" || snake.name === "TorS"
-    ),
-    enemySnakes: gameState.board.snakes.filter(
-      (snake) => snake.name !== "VilmerJ" && snake.name !== "TorS"
-    ),
+    ourSnakes: gameState.board.snakes
+      .filter((snake) => snake.name === "VilmerJ" || snake.name === "TorS")
+      .map((snake) => {
+        return {
+          id: snake.id,
+          head: snake.head,
+          health: snake.health,
+          body: snake.body,
+          length: snake.length,
+        };
+      }),
+    enemySnakes: gameState.board.snakes
+      .filter((snake) => snake.name !== "VilmerJ" && snake.name !== "TorS")
+      .map((snake) => {
+        return {
+          id: snake.id,
+          head: snake.head,
+          health: snake.health,
+          body: snake.body,
+          length: snake.length,
+        };
+      }),
   };
 
   const ourSnake = state.ourSnakes.find(
