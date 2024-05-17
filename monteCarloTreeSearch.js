@@ -62,6 +62,12 @@ export const monteCarloTreeSearch = (state) => {
     }
     const result = simulate(node, 0); // 3. Simulate from the selected node
     backpropagate(node, result); // 4. Backpropagation
+
+    // Benchmark search depth
+    if (node.turn > maxDepthReached) {
+      maxDepthReached = node.turn;
+    }
+
     numberOfSimulations++; // Increment number of simulations
   }
   console.log(
@@ -294,11 +300,6 @@ const simulate = (node, depth, startTime) => {
 
     // 5. Create the nodes for the states s2.2
     tempNode = new Node(state2, tempNode.turn + 1);
-  }
-
-  // Benchmark search depth
-  if (tempNode.turn > maxDepthReached) {
-    maxDepthReached = tempNode.turn;
   }
 
   return evaluation(
