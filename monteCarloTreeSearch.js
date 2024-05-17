@@ -238,9 +238,10 @@ const expand = (node) => {
 //3. Simulation until we reach an end node or exit criteria is met
 const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
+  const thisSimDepth = node.turn + MAX_SIMULATIONS_DEPTH;
 
   let tempNode = new Node(copyState(node.state), node.turn);
-  while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !tempNode.isTerminal) {
+  while (tempNode.turn < thisSimDepth && !tempNode.isTerminal) {
     // Get possible moves
     const ourSnakes =
       tempNode.turn % 2 === 0
