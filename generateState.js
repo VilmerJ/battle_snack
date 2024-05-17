@@ -1,9 +1,8 @@
-import pkg from "lodash";
-const { cloneDeep } = pkg;
+import { copyState } from "./helpers.js";
 
 export const generateNewState = (state, snakeId, move, turn) => {
   // Create a deep copy of the board
-  const newState = deepCopy(state);
+  const newState = copyState(state);
   const ourSnakes = turn % 2 === 0 ? newState.ourSnakes : newState.enemySnakes;
 
   // Find the snake that is moving

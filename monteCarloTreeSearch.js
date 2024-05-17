@@ -1,8 +1,6 @@
-import { deepCopy, generateNewState, isTerminal } from "./generateState.js";
-import { getLegalMoves, purgeSnakes } from "./helpers.js";
+import { generateNewState, isTerminal } from "./generateState.js";
+import { copyState, getLegalMoves, purgeSnakes } from "./helpers.js";
 import { evaluation } from "./evaluation.js";
-// import pkg from "lodash";
-// const { cloneDeep } = pkg;
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
 const MAX_SIMULATIONS_DEPTH = 24; // 12 turns for each player
@@ -235,7 +233,7 @@ const expand = (node) => {
 const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
 
-  let tempNode = new Node(deepCopy(node.state), node.turn);
+  let tempNode = new Node(copyState(node.state), node.turn);
   while (tempNode.turn < MAX_SIMULATIONS_DEPTH && !tempNode.isTerminal) {
     // Get possible moves
     const ourSnakes =

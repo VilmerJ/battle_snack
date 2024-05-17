@@ -150,3 +150,24 @@ export const purgeSnakes = (state) => {
   state.ourSnakes = filteredSnakes.filter((snake) => ourSnakes.includes(snake));
   return state;
 };
+
+export const copyState = (state) => {
+  return {
+    width: state.width,
+    height: state.height,
+    food: state.food.map((xy) => ({ ...xy })),
+    ourSnakes: state.ourSnakes.map(copySnakes),
+    enemySnakes: state.enemySnakes.map(copySnakes),
+  };
+};
+
+const copySnakes = (snake) => {
+  return {
+    id: snake.id,
+    name: snake.name,
+    health: snake.health,
+    body: snake.body.map((body) => ({ ...body })),
+    head: { ...snake.head },
+    length: snake.length,
+  };
+};
