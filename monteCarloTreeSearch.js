@@ -226,7 +226,7 @@ const expand = (node) => {
   }
 
   // 4.5 Purge colliding snakes in the states
-  states2.map((state) => purgeSnakes(state));
+  if (node.depth % 2 == 0) states2.map((state) => purgeSnakes(state));
 
   // 5. Create the nodes for the states s2.2
   const children = states2.map((state) => new Node(state, node.turn + 1, node));
@@ -238,7 +238,7 @@ const expand = (node) => {
 //3. Simulation until we reach an end node or exit criteria is met
 const simulate = (node, depth, startTime) => {
   // Simulate until stop criterion is reached
-  const thisSimDepth = node.turn + MAX_SIMULATIONS_DEPTH;
+  const thisSimDepth = node.turn + MAX_SIMULATIONS_DEPTH + (node.turn % 2);
 
   let tempNode = new Node(copyState(node.state), node.turn);
   while (tempNode.turn < thisSimDepth && !tempNode.isTerminal) {
@@ -297,7 +297,7 @@ const simulate = (node, depth, startTime) => {
     generateStateCounter++;
     generateStateTime += Date.now() - generateStateStart;
     // 4.5 Purge colliding snakes
-    purgeSnakes(state2);
+    if (node.depth % 2 == 0) purgeSnakes(state2);
 
     // 5. Create the nodes for the states s2.2
     tempNode = new Node(state2, tempNode.turn + 1);
