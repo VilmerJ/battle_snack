@@ -199,6 +199,7 @@ const expand = (node) => {
   generateStateTime += Date.now() - stateStart;
 
   if (ourSnakes.length === 1) {
+    if (node.turn % 2 == 0) states.forEach(purgeSnakes);
     const children = states.map(
       (state) => new Node(state, node.turn + 1, node)
     );
@@ -273,6 +274,7 @@ const simulate = (node, depth, startTime) => {
     generateStateTime += Date.now() - generateStateStart;
 
     if (ourSnakes.length === 1) {
+      if (node.depth % 2 == 0) purgeSnakes(state);
       tempNode = new Node(state, tempNode.turn + 1);
       continue;
     }
