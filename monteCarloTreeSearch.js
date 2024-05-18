@@ -199,7 +199,7 @@ const expand = (node) => {
   generateStateTime += Date.now() - stateStart;
 
   if (ourSnakes.length === 1) {
-    if (node.turn % 2 == 0) states.forEach(purgeSnakes);
+    if (node.turn % 2 === 1) states.forEach(purgeSnakes);
     const children = states.map(
       (state) => new Node(state, node.turn + 1, node)
     );
@@ -227,7 +227,7 @@ const expand = (node) => {
   }
 
   // 4.5 Purge colliding snakes in the states
-  if (node.depth % 2 == 0) states2.map((state) => purgeSnakes(state));
+  if (node.depth % 2 === 1) states2.map((state) => purgeSnakes(state));
 
   // 5. Create the nodes for the states s2.2
   const children = states2.map((state) => new Node(state, node.turn + 1, node));
@@ -274,7 +274,7 @@ const simulate = (node, depth, startTime) => {
     generateStateTime += Date.now() - generateStateStart;
 
     if (ourSnakes.length === 1) {
-      if (node.depth % 2 == 0) purgeSnakes(state);
+      if (node.depth % 2 === 1) purgeSnakes(state);
       tempNode = new Node(state, tempNode.turn + 1);
       continue;
     }
@@ -299,7 +299,7 @@ const simulate = (node, depth, startTime) => {
     generateStateCounter++;
     generateStateTime += Date.now() - generateStateStart;
     // 4.5 Purge colliding snakes
-    if (node.depth % 2 == 0) purgeSnakes(state2);
+    if (node.depth % 2 === 1) purgeSnakes(state2);
 
     // 5. Create the nodes for the states s2.2
     tempNode = new Node(state2, tempNode.turn + 1);
@@ -315,7 +315,7 @@ const simulate = (node, depth, startTime) => {
 const backpropagate = (node, result) => {
   while (node !== null) {
     node.visits += 1;
-    node.score += node.turn % 2 == 0 ? -result : result; // We want to maximize the score of the first player
+    node.score += node.turn % 2 === 0 ? -result : result; // We want to maximize the score of the first player
     node = node.parent;
   }
 };
