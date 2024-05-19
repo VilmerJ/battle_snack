@@ -8,7 +8,8 @@ export const getLegalMoves = (state, id, turn) => {
   };
 
   const snakes = [...state.ourSnakes, ...state.enemySnakes];
-  const myBody = snakes.find((snake) => snake.id === id).body;
+  const mySnake = snakes.find((snake) => snake.id === id);
+  const myBody = mySnake.body;
 
   const myHead = myBody[0];
   const myNeck = myBody[1];
@@ -48,6 +49,17 @@ export const getLegalMoves = (state, id, turn) => {
   // Iterate over snakes
   for (const snake of snakes) {
     // Iterate over the possible new head positions
+    let possibleNewHeadPositions = [];
+    if (snake.id !== id && turn % 2 === 0 && mySnake.length < snake.length) {
+      const oldHead = turn % 2 === 0 ? snake.head : snake.body[1];
+      possibleNewHeadPositions = [
+        { x: oldHead.x, y: oldHead.y + 1 },
+        { x: oldHead.x, y: oldHead.y - 1 },
+        { x: oldHead.x - 1, y: oldHead.y },
+        { x: oldHead.x + 1, y: oldHead.y },
+      ];
+    }
+
     for (const move in newHeadPositions) {
       // If the move is not safe then we skip
       if (!isMoveSafe[move]) {
@@ -55,18 +67,14 @@ export const getLegalMoves = (state, id, turn) => {
       }
       // Get the new head position
       const newHead = newHeadPositions[move];
-      // If the new head position is some other snakes body
-      // 1. For turn % 2 = 0 => cannot collide with either head or body
-      // So: turn % 2 = 0 AND pos(Head) = pos(segment) => move is unsafe
-      // 2. For turn % 2 = 1 => cannot collide with body, but can collide with head
-      // So: turn % 2 = 1 AND pos(Head) = pos(segment) AND segment != snake.head => move is unsafe
+      // Make the snake not take any risks
       if (
-        snake.body.some(
+        [...snake.body, ...possibleNewHeadPositions].some(
           (segment) =>
             (turn % 2 === 0 &&
               segment.x === newHead.x &&
               segment.y === newHead.y) ||
-            (turn % 2 === 1 &&
+            (turn % 2 === 0 &&
               segment !== snake.head &&
               segment.x === newHead.x &&
               segment.y === newHead.y)

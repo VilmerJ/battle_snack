@@ -4,7 +4,7 @@ import { evaluation } from "./evaluation.js";
 
 const EXPLORATION_CONSTANT = Math.sqrt(2);
 const MAX_SIMULATIONS_DEPTH = 24; // 12 turns for each player
-const MAX_TIME = 380; // ms
+const MAX_TIME = 360; // ms
 let maxDepthReached = 0;
 let getLegalMovesCounter = 0;
 let getLegalMovesTime = 0;
@@ -131,13 +131,14 @@ const bestUCT = (node) => {
   return bestChild;
 };
 
-// Returns the child with the best score to visists ratio
+// Returns the child with the best score
 const bestChild = (node) => {
   let bestChild = null;
   let bestScore = -Infinity;
 
   for (const child of node.children) {
     const score = child.score / child.visits;
+    console.log("Child score: ", score);
     if (score > bestScore) {
       bestScore = score;
       bestChild = child;
@@ -227,7 +228,7 @@ const expand = (node) => {
   }
 
   // 4.5 Purge colliding snakes in the states
-  if (node.depth % 2 === 1) states2.map((state) => purgeSnakes(state));
+  if (node.turn % 2 === 1) states2.map((state) => purgeSnakes(state));
 
   // 5. Create the nodes for the states s2.2
   const children = states2.map((state) => new Node(state, node.turn + 1, node));
@@ -299,7 +300,7 @@ const simulate = (node, depth, startTime) => {
     generateStateCounter++;
     generateStateTime += Date.now() - generateStateStart;
     // 4.5 Purge colliding snakes
-    if (node.depth % 2 === 1) purgeSnakes(state2);
+    if (node.turn % 2 === 1) purgeSnakes(state2);
 
     // 5. Create the nodes for the states s2.2
     tempNode = new Node(state2, tempNode.turn + 1);
@@ -315,7 +316,7 @@ const simulate = (node, depth, startTime) => {
 const backpropagate = (node, result) => {
   while (node !== null) {
     node.visits += 1;
-    node.score += node.turn % 2 === 0 ? -result : result; // We want to maximize the score of the first player
+    node.score += node.turn % 2 == 0 ? -result : result; // We want to maximize the score of the first player
     node = node.parent;
   }
 };
