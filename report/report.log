@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.18)  20 MAY 2024 17:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.18)  20 MAY 2024 18:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -372,7 +372,7 @@ Package pdftex.def Info: pictures//Vilmer_Jonsson.jpg  used on input line 45.
 
  </Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/pictures//Vilmer_Jonsson.jpg>] [2
 
-] [3] [4] [5] [6] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.bbl) [7
+] [3] [4] [5] [6] [7] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.bbl) [8
 
 ] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.aux) ) 
 Here is how much of TeX's memory you used:
@@ -384,10 +384,10 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  83i,18n,117p,642b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on /Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf (7 pages, 443174 bytes).
+Output written on /Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf (8 pages, 443616 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 68 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
