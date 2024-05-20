@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.18)  26 MAR 2024 19:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.18)  20 MAY 2024 17:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/report.tex
-(/Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/report.tex
+**/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.tex
+(/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18> (/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
@@ -325,7 +325,7 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count290
 \l__pdf_internal_box=\box102
-) (/Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/report.aux)
+) (/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
@@ -370,70 +370,24 @@ Package pdftex.def Info: pictures//Vilmer_Jonsson.jpg  used on input line 45.
 (pdftex.def)             Requested size: 50.7019pt x 65.75421pt.
  [1{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
- </Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/pictures//Vilmer_Jonsson.jpg>] [2
+ </Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/pictures//Vilmer_Jonsson.jpg>] [2
 
-]
-<pictures//missile.png, id=16, 298.11375pt x 306.14375pt>
-File: pictures//missile.png Graphic file (type png)
-<use pictures//missile.png>
-Package pdftex.def Info: pictures//missile.png  used on input line 92.
-(pdftex.def)             Requested size: 175.49881pt x 180.22617pt.
-<pictures//velObstacles.jpg, id=18, 690.58pt x 622.325pt>
-File: pictures//velObstacles.jpg Graphic file (type jpg)
-<use pictures//velObstacles.jpg>
-Package pdftex.def Info: pictures//velObstacles.jpg  used on input line 101.
-(pdftex.def)             Requested size: 175.49881pt x 158.14476pt.
-<pictures//reciprocal.jpg, id=19, 527.9725pt x 242.9075pt>
-File: pictures//reciprocal.jpg Graphic file (type jpg)
-<use pictures//reciprocal.jpg>
-Package pdftex.def Info: pictures//reciprocal.jpg  used on input line 111.
-(pdftex.def)             Requested size: 175.49881pt x 80.74162pt.
- [3 </Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/pictures//missile.png> </Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/pictures//velObstacles.jpg> </Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/pictures//reciprocal.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
-[]\OT1/cmr/m/n/12 For for-ma-tion keep-ing, one
- []
+] [3] [4] [5] [6] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.bbl) [7
 
-[4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 199--199
-[]\OT1/cmr/bx/n/17.28 Experimental re-
- []
-
-[6]
-Overfull \hbox (2.0484pt too wide) in paragraph at lines 248--254
- [] 
- []
-
-
-Package multicol Warning: Floats and marginpars not allowed inside `multicols' environment!.
-
-
-Package multicol Warning: Floats and marginpars not allowed inside `multicols' environment!.
-
-
-Package multicol Warning: I moved some lines to the next page.
-(multicol)                Footnotes on page 7 might be wrong on input line 266.
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 272--272
-[]\OT1/cmr/bx/n/17.28 Summary and
- []
-
-[8] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/report.bbl) [9
-
-] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/report.aux) ) 
+] (/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.aux) ) 
 Here is how much of TeX's memory you used:
- 6387 strings out of 478994
- 99910 string characters out of 5858184
- 424003 words of memory out of 5000000
- 23767 multiletter control sequences out of 15000+600000
- 412082 words of font info for 57 fonts, out of 8000000 for 9000
+ 6339 strings out of 478994
+ 99105 string characters out of 5858184
+ 411985 words of memory out of 5000000
+ 23724 multiletter control sequences out of 15000+600000
+ 410678 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 83i,18n,117p,982b,475s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on /Users/vilmer/Programmering/kthyear4/agent_DD2438/reportA2/report.pdf (9 pages, 648851 bytes).
+ 83i,18n,117p,642b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on /Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf (7 pages, 443174 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 65 PDF objects out of 1000 (max. 8388607)
+ 45 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

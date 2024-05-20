@@ -1,32 +1,8 @@
 \begin{thebibliography}{1}
 
-\bibitem{adler1956missile}
-Fred~P Adler.
-\newblock Missile guidance by three-dimensional proportional navigation.
-\newblock {\em Journal of Applied Physics}, 27(5):500--507, 1956.
-
-\bibitem{9214872}
-Fei Chen and Dimos~V. Dimarogonas.
-\newblock Leader–follower formation control with prescribed performance
-  guarantees.
-\newblock {\em IEEE Transactions on Control of Network Systems}, 8(1):450--461,
-  2021.
-
-\bibitem{doi:10.1177/027836499801700706}
-Paolo Fiorini and Zvi Shiller.
-\newblock Motion planning in dynamic environments using velocity obstacles.
-\newblock {\em The International Journal of Robotics Research}, 17(7):760--772,
-  1998.
-
-\bibitem{snape2011hybrid}
-Jamie Snape, Jur Van Den~Berg, Stephen~J Guy, and Dinesh Manocha.
-\newblock The hybrid reciprocal velocity obstacle.
-\newblock {\em IEEE Transactions on Robotics}, 27(4):696--706, 2011.
-
-\bibitem{van2008reciprocal}
-Jur Van~den Berg, Ming Lin, and Dinesh Manocha.
-\newblock Reciprocal velocity obstacles for real-time multi-agent navigation.
-\newblock In {\em 2008 IEEE international conference on robotics and
-  automation}, pages 1928--1935. IEEE, 2008.
+\bibitem{RussellNorvigAIBook3rd}
+Stuart~J. Russell and Peter Norvig.
+\newblock {\em Artificial Intelligence - A Modern Approach}.
+\newblock Number ISBN 978-0-13-207148-2. Pearson Education, 3rd edition, 2010.
 
 \end{thebibliography}

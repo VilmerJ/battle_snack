@@ -3,44 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: report.aux
 The style file: plain.bst
 Database file #1: reflist.bib
-You've used 5 entries,
+Warning--there's a number but no series in RussellNorvigAIBook3rd
+You've used 1 entry,
             2118 wiz_defined-function locations,
-            534 strings with 4891 characters,
-and the built_in function-call counts, 1894 in all, are:
-= -- 194
-> -- 74
+            505 strings with 4159 characters,
+and the built_in function-call counts, 301 in all, are:
+= -- 29
+> -- 13
 < -- 1
-+ -- 30
-- -- 24
-* -- 141
-:= -- 306
-add.period$ -- 16
-call.type$ -- 5
-change.case$ -- 27
++ -- 5
+- -- 4
+* -- 20
+:= -- 57
+add.period$ -- 4
+call.type$ -- 1
+change.case$ -- 5
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 69
-empty$ -- 153
-format.name$ -- 24
-if$ -- 402
+cite$ -- 2
+duplicate$ -- 12
+empty$ -- 23
+format.name$ -- 4
+if$ -- 62
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 5
-newline$ -- 28
-num.names$ -- 10
-pop$ -- 22
+int.to.str$ -- 1
+missing$ -- 2
+newline$ -- 8
+num.names$ -- 2
+pop$ -- 6
 preamble$ -- 1
-purify$ -- 22
+purify$ -- 4
 quote$ -- 0
-skip$ -- 51
+skip$ -- 6
 stack$ -- 0
-substring$ -- 158
-swap$ -- 17
+substring$ -- 5
+swap$ -- 2
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 20
-warning$ -- 0
-while$ -- 19
-width$ -- 6
-write$ -- 58
+type$ -- 2
+warning$ -- 1
+while$ -- 2
+width$ -- 2
+write$ -- 14
+(There was 1 warning)
