@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QWhere accLengthFriendly is the accumulated length of the friendly team's snakes, accLengthEnemy is the accumulated length of the enemy team's snakes, accHealthFriendly is the accumulated health of the friendly team's snakes, and accHealthEnemy is the accumulated health of the enemy team's snakes.\\E$"}
