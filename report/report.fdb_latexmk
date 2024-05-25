@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex report"] 1716307107 "report.aux" "report.bbl" "report" 1716307194
+["bibtex report"] 1716307107 "report.aux" "report.bbl" "report" 1716681461
   "/usr/local/texlive/2021/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
   "reflist.bib" 1716216942 590 6a503cb93286888dcc429e085f8d3071 ""
-  "report.aux" 1716307193 2138 dd6427d24aad1446838ff8ec22873deb "pdflatex"
+  "report.aux" 1716681461 2138 dd6427d24aad1446838ff8ec22873deb "pdflatex"
   (generated)
   "report.bbl"
   "report.blg"
-["pdflatex"] 1716307193 "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.tex" "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf" "report" 1716307194
-  "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.aux" 1716307193 2138 dd6427d24aad1446838ff8ec22873deb ""
-  "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.tex" 1716307192 18960 288c7c66ce0d330ec1f8648fc20ff0f9 ""
+["pdflatex"] 1716681460 "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.tex" "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf" "report" 1716681461
+  "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.aux" 1716681461 2138 dd6427d24aad1446838ff8ec22873deb ""
+  "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.tex" 1716681460 19391 b5c7cdf187c0ba95a010f4093b4bb5b5 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -185,12 +185,12 @@
   "/usr/local/texlive/2021/texmf.cnf" 1616695596 577 4c1911a7228e554c6032256d3cf5567d ""
   "pictures//Vilmer_Jonsson.jpg" 1716216243 341398 1941b73befe4eb171c87585786fb74ad ""
   "pictures//tor.jpg" 1667400971 418588 f0af559e4c300b1e0c3ddd26a935f25c ""
-  "report.aux" 1716307193 2138 dd6427d24aad1446838ff8ec22873deb "pdflatex"
+  "report.aux" 1716681461 2138 dd6427d24aad1446838ff8ec22873deb "pdflatex"
   "report.bbl" 1716307107 260 8febf1d13def0153bb3da4932529cb4b "bibtex report"
-  "report.tex" 1716307192 18960 288c7c66ce0d330ec1f8648fc20ff0f9 ""
+  "report.tex" 1716681460 19391 b5c7cdf187c0ba95a010f4093b4bb5b5 ""
   (generated)
-  "report.log"
-  "report.aux"
   "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.log"
-  "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf"
+  "report.aux"
   "report.pdf"
+  "/Users/vilmer/Programmering/kthyear4/agent_DD2438/battle_snack/report/report.pdf"
+  "report.log"
