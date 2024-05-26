@@ -6,8 +6,73 @@
 
 
 %% Saved with string encoding Unicode (UTF-8) 
+TY  - JOUR
+AU  - Auer, Peter
+AU  - Cesa-Bianchi, Nicolò
+AU  - Fischer, Paul
+PY  - 2002
+DA  - 2002/05/01
+TI  - Finite-time Analysis of the Multiarmed Bandit Problem
+JO  - Machine Learning
+SP  - 235
+EP  - 256
+VL  - 47
+IS  - 2
+AB  - Reinforcement learning policies face the exploration versus exploitation dilemma, i.e. the search for a balance between exploring the environment to find profitable actions while taking the empirically best action as often as possible. A popular measure of a policy's success in addressing this dilemma is the regret, that is the loss due to the fact that the globally optimal policy is not followed all the times. One of the simplest examples of the exploration/exploitation dilemma is the multi-armed bandit problem. Lai and Robbins were the first ones to show that the regret for this problem has to grow at least logarithmically in the number of plays. Since then, policies which asymptotically achieve this regret have been devised by Lai and Robbins and many others. In this work we show that the optimal logarithmic regret is also achievable uniformly over time, with simple and efficient policies, and for all reward distributions with bounded support.
+SN  - 1573-0565
+UR  - https://doi.org/10.1023/A:1013689704352
+DO  - 10.1023/A:1013689704352
+ID  - Auer2002
+ER  - 
+@article{AuerPeter2002FAot,
+abstract = {Reinforcement learning policies face the exploration versus exploitation dilemma, i.e. the search for a balance between exploring the environment to find profitable actions while taking the empirically best action as often as possible. A popular measure of a policy's success in addressing this dilemma is the regret, that is the loss due to the fact that the globally optimal policy is not followed all the times. One of the simplest examples of the exploration/exploitation dilemma is the multi-armed bandit problem. Lai and Robbins were the first ones to show that the regret for this problem has to grow at least logarithmically in the number of plays. Since then, policies which asymptotically achieve this regret have been devised by Lai and Robbins and many others. In this work we show that the optimal logarithmic regret is also achievable uniformly over time, with simple and efficient policies, and for all reward distributions with bounded support.[PUBLICATION ABSTRACT]},
+author = {Auer, Peter and Cesa-bianchi, Nicolò and Fischer, Paul},
+address = {Dordrecht},
+copyright = {Kluwer Academic Publishers 2002},
+issn = {0885-6125},
+journal = {Machine learning},
+language = {eng},
+number = {2-3},
+pages = {235-256},
+publisher = {Springer Nature B.V},
+title = {Finite-time Analysis of the Multiarmed Bandit Problem},
+volume = {47},
+year = {2002},
+}
 
 
+@InProceedings{10.1007/11871842_29,
+author="Kocsis, Levente
+and Szepesv{\'a}ri, Csaba",
+editor="F{\"u}rnkranz, Johannes
+and Scheffer, Tobias
+and Spiliopoulou, Myra",
+title="Bandit Based Monte-Carlo Planning",
+booktitle="Machine Learning: ECML 2006",
+year="2006",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="282--293",
+abstract="For large state-space Markovian Decision Problems Monte-Carlo planning is one of the few viable approaches to find near-optimal solutions. In this paper we introduce a new algorithm, UCT, that applies bandit ideas to guide Monte-Carlo planning. In finite-horizon or discounted MDPs the algorithm is shown to be consistent and finite sample bounds are derived on the estimation error due to sampling. Experimental results show that in several domains, UCT is significantly more efficient than its alternatives.",
+isbn="978-3-540-46056-5"
+}
+
+
+
+
+@article{POWLEY201492,
+title = {Information capture and reuse strategies in Monte Carlo Tree Search, with applications to games of hidden information},
+journal = {Artificial Intelligence},
+volume = {217},
+pages = {92-116},
+year = {2014},
+issn = {0004-3702},
+doi = {https://doi.org/10.1016/j.artint.2014.08.002},
+url = {https://www.sciencedirect.com/science/article/pii/S0004370214001052},
+author = {Edward J. Powley and Peter I. Cowling and Daniel Whitehouse},
+keywords = {Game tree search, Hidden information, Information reuse, Machine learning, Monte Carlo Tree Search (MCTS), Uncertainty},
+abstract = {Monte Carlo Tree Search (MCTS) has produced many breakthroughs in search-based decision-making in games and other domains. There exist many general-purpose enhancements for MCTS, which improve its efficiency and effectiveness by learning information from one part of the search space and using it to guide the search in other parts. We introduce the Information Capture And ReUse Strategy (ICARUS) framework for describing and combining such enhancements. We demonstrate the ICARUS framework's usefulness as a frame of reference for understanding existing enhancements, combining them, and designing new ones. We also use ICARUS to adapt some well-known MCTS enhancements (originally designed for games of perfect information) to handle information asymmetry between players and randomness, features which can make decision-making much more difficult. We also introduce a new enhancement designed within the ICARUS framework, EPisodic Information Capture and reuse (EPIC), designed to exploit the episodic nature of many games. Empirically we demonstrate that EPIC is stronger and more robust than existing enhancements in a variety of game domains, thus validating ICARUS as a powerful tool for enhancement design within MCTS.}
+}
 
 @book{RussellNorvigAIBook3rd,
   author        = {Stuart J. Russell and Peter Norvig},
@@ -18,4 +83,15 @@
   publisher     = {Pearson Education},
   title         = {Artificial Intelligence - A Modern Approach},
   year          = {2010}
+}
+
+@article{browne2012survey,
+  title={A survey of monte carlo tree search methods},
+  author={Browne, Cameron B and Powley, Edward and Whitehouse, Daniel and Lucas, Simon M and Cowling, Peter I and Rohlfshagen, Philipp and Tavener, Stephen and Perez, Diego and Samothrakis, Spyridon and Colton, Simon},
+  journal={IEEE Transactions on Computational Intelligence and AI in games},
+  volume={4},
+  number={1},
+  pages={1--43},
+  year={2012},
+  publisher={IEEE}
 }
