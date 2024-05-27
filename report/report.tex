@@ -28,7 +28,7 @@ Vilmer Jonsson & Tor Strimbold\\
 2001-06-26 & 1999-10-06 \\ 
 vilmerj@kth.se & torstri@kth.se \\
 \includegraphics[width=0.13\linewidth]{Vilmer_Jonsson.jpg}
-& \includegraphics[width=0.13\linewidth]{tor.jpg}
+& \includegraphics[width=0.13\linewidth]{torbild.jpg}
 \end{tabular}} 
 % Normally there will not be any pictures but we want
 % these so that we can connect faces to names in the course
@@ -49,9 +49,8 @@ vilmerj@kth.se & torstri@kth.se \\
 \thispagestyle{fancy}
 
 \begin{abstract}
-
-
-
+In this report, we present our implementation of an agent able to play the Battlesnake game where two or more agents complete in a last-man-standing format. Implemented in JavaScript using Node.js, our agent utilized the Monte Carlo Tree Search (MCTS) algorithm to enable collaborative and competitive behavior. The results of the project are presented and compared to other implementations for the same problem thereafter we present some extensions to the algorithm which would further improve the performance. This work offers insight into how relatively simple AI can be applied to a zero-sum game and exhibit collaborative
+and competitive behavior, as well as how the MCTS algorithm can be applied to video-game AI agents.
 \end{abstract}
 
 
@@ -62,7 +61,7 @@ vilmerj@kth.se & torstri@kth.se \\
 \section{Introduction}
 \label{sec:intro}
 
-The game Snake was first released in 1976 where two players controlled a "snake" which continually grows for every turn, to grow as large as possible before being eliminated by either colliding with the surrounding wall. This project is based on the retro game through the coding challenge provided by Battlesnake.com. Several formats are more or less similar to the original game, but the main difference is that snakes now have a \textit{health} property which starts at 100 points and decrements for every in-game turn. When a snake consumes any of the food on the board, the snake grows by one square and their health is restored. This extension is a part of every \textit{battle snake} theme but some of the most popular formats are \textit{standard}, where four snakes battle each other, \textit{duels}, where two snakes face-off, which the similar format to that of the original game, and \textit{royale} where four snakes fight on a board where a "hazardous" zone grows from the edges towards the center, inflicting further reductions to the snakes' health when they pass through the zone.
+The game Snake was first released in 1976 where two players controlled a "snake" which continually grows for every turn, to grow as large as possible before being eliminated by either colliding with the surrounding wall. This project is based on the retro game through the coding challenge provided by \verb|Battlesnake.com|. Several formats are more or less similar to the original game, but the main difference is that snakes now have a \textit{health} property which starts at 100 points and decrements for every in-game turn. When a snake consumes any of the food on the board, the snake grows by one square and their health is restored. This extension is a part of every \textit{battle snake} theme but some of the most popular formats are \textit{standard}, where four snakes battle each other, \textit{duels}, where two snakes face-off, which the similar format to that of the original game, and \textit{royale} where four snakes fight on a board where a "hazardous" zone grows from the edges towards the center, inflicting further reductions to the snakes' health when they pass through the zone.
 
 
 Thus, the problem underlying the problem is to design an agent that can effectively handle different situations and make decisions regarding short-term versus long-term rewards. It is, for example, not always the best move to eat food to grow or risk an attack against an enemy if it could result in a precarious situation if the attack fails. Furthermore, in this project, teams were tasked with writing code to guide the snake in a 2v2 format which introduces additional parameters to the problem. Through this extension, the snakes' survival chances are increased if they can collaborate to eliminate the opposing team.
@@ -94,32 +93,33 @@ The outline of the rest of the report is as follows: section 2 presents the rela
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 \section{Related work}
 \label{sec:relwork}
 % \emph{Related Work section describing and referring to at least 5 research papers}
 
-Example citation \cite{RussellNorvigAIBook3rd}.
+\cite{AuerPeter2002FAot} introduces the UCB1 algorithm which is a general algorithm for balancing exploration and exploitation. They prove that simple and efficient policies can achieve the optimal logarithmic regret uniformly over time. The algorithm is general and applied to the Multi-Armed Bandit problem in the study. The Multi-Armed Bandit problem is a problem where a gambler is faced with a row of slot machines, each with an unknown probability of providing a reward. The gambler has to decide which slot machine to play to maximize the reward. The UCB algorithm can then be used to choose the slot machine with the highest potential reward. 
 
-Monte Carlo Tree Search has been 
-
-There are several possible enhancement that can be done to a MCTS, and different problems allow for different enhancements. However, some enhancements are general-purpose. In \cite{POWLEY201492} the authors introduce a framework, \textit{Information Capture And ReUse Strategy (ICARUS)} used for evaluating and combining the enhancements. 
+One of the possible factors that can be improved in the MCTS algorithm is the selection policy. The selection policy is the policy that decides which node to explore next. \cite{kocsis2006bandit} introduces the \textit{Upper Confidence Bound for Trees (UCT)} algorithm, which is a selection policy that balances exploration and exploitation. The UCT algorithm is based on the Upper Confidence Bound (UCB) algorithm and is very similar to it. The goal of the UCT algorithm is to select the node that has the highest potential for being the best node thus ignoring nodes that have already been explored and found to likely be suboptimal.
 
 
-AlphaGo was the first AI to beat a human professional Go player, the game of Go has a large state space and is considered more complex than for example chess. The AI was developed by DeepMind and used a combination of deep neural networks and Monte Carlo Tree Search. The reason for using MCTS was that it is a good algorithm for games with a large state space and where the state space is not fully known. % Lol hitta källa
+Several possible enhancements can be made to an MCTS, and different problems allow for different enhancements. However, some enhancements are general-purpose. In \cite{POWLEY201492} the authors introduce a framework, \textit{Information Capture And ReUse Strategy (ICARUS)} used for evaluating and combining the enhancements. 
 
 
+AlphaGo was the first AI to beat a human professional Go player, the game of Go has a large state space and is considered more complex than for example chess. The AI was developed by DeepMind and used a combination of deep neural networks and MCTS. The reason for using MCTS was that it is a good algorithm for games with a large state space and where the state space is not fully known. % Lol hitta källa
 
+
+An interesting event in the world of chess programming occurred in late 2017. At the time Stockfish was firmly considered as the strongest chess engine, outperforming human players and engines alike. This view was however questioned when the engine was pitted against DeepMind’s project AlphaZero. \cite{chess.com_stockfish}
+
+DeepMind had in the previous year achieved an impressive feat in a similar board game named Go through their engine AlphaGo Zero, which was able to defeat the current world champion Lee Zedol. What separated AlphaGo Zero from previous game-playing systems was the fact that the program was only given the rules of the game and learned by playing against itself. The Deep Mind team now aimed to develop a more generic program able to play not only go but also chess and shogi. \cite{doi:10.1126/science.aar6404}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 \section{Proposed method}
 \label{sec:method}
 
-The AI is implemented using the Monte Carlo Tree Search (MCTS) algorithm. The algorithm is divided into four main steps: selection, expansion, simulation, and backpropagation. Every turn, the algorithm is called and starts to run iteratively for a certain amount of time. 
+The AI is implemented using the MCTS algorithm. The algorithm is divided into four main steps: selection, expansion, simulation, and backpropagation. Every turn, the algorithm is called and starts to run iteratively for a certain amount of time. 
 
 Every node in the tree represents a state in the game. The root node is the current state of the game, and the children of the root node are the possible moves that can be made from the current state. A move is defined as all snakes in a team moving one step in a certain direction. If a move results in a collision, the move is invalid, and the node is not expanded. Thus, the number of children a node can vary, but is at most nine, since each snake can turn left or right, or go straight, and there are at most two snakes in a team. %% Detta är lite wonky
 
@@ -150,7 +150,7 @@ The expansion phase is where the algorithm creates new child nodes for a leaf no
 When new children have been added to the leaf node, the best child according to equation \ref{eq:ucb} is selected. To determine the score of the node, the algorithm simulates the game from the selected child node for 12 or 12.5 rounds, depending on whether the friendly or enemy team makes the first move. The purpose of this is to ensure both teams have done the same number of moves when the simulation ends. The simulation is done by selecting a random \textit{valid} move for each snake in the team. A move is considered valid if it does not result in a collision with a wall or another snake. This is done to make the simulation more realistic while still covering many possible states. There were considerations of for example simulating the snakes targeting food, but this was not implemented due to not wanting to bias the simulation and risk limiting the exploration of alternative, potentially better, moves.
 
 
-The score of the simulation is based on a heuristic function that evaluates the state of the game in the end of the simulation. The heuristic function is described in equation \ref{eq:heuristic}.
+The score of the simulation is based on a heuristic function that evaluates the state of the game at the end of the simulation. The heuristic function is described in equation \ref{eq:heuristic}.
 
 
 \begin{multline} \label{eq:heuristic}
@@ -163,17 +163,12 @@ An important attribute of the scoring heuristic is that it is symmetric. This me
 
 
 %% Kanske nåt sånt här, men platsar typ inte här utan experimental results
-%% The heuristic function may be the area were the most improvement could be done to the algorithm. The heuristic function is simple and the snakes are great when they are longer than their opponents and have momentum. However, the snakes seem to sometime not prioritize food in the beginning of the game and instead just try to survive. 
+%% The heuristic function may be the area where the most improvement could be done to the algorithm. The heuristic function is simple and the snakes are great when they are longer than their opponents and have momentum. However, the snakes seem to sometimes not prioritize food at the beginning of the game and instead just try to survive. 
 
 
 
 
-\subsection{Edge Cases}
-
-The algorithm uses some edge cases to handle certain situations that may occur during the game. These edge cases often occur because the modeling of the game state is suboptimal. The most apparent flaw is that in the game the snakes do their moves simultaneously, but in the simulation, the snakes move one after another. This can lead to situations where a snake can move into a position that would result in a collision with another snake that has not done its move in the specific turn yet.
-
-
-\subsubsection{Head-To-Head Collisions} %% Ta bort \subsubsection om vi inte har fler edge-cases
+\subsection{Head-To-Head Collisions} %% Ta bort \subsubsection om vi inte har fler edge-cases
 
 In the early stages of testing the algorithm, it was discovered that the snakes would often collide head-to-head and this would thus heavily impact the outcome of the game since the shorter snake would die. % Wonky sentence
 The reason why head-to-head collisions are difficult to model is that the snakes move simultaneously in the game, but in the simulation, the snakes move one after another. This can lead to a situation where one snake moves into a position that another snake also can move to, resulting in a head-to-head collision. To handle this, the algorithm is very safe regarding the friendly snakes. The friendly snakes will never move into a position that would risk a head-to-head collision with a longer snake. However, the algorithm assumes that enemy snakes can take such risks, this leads the algorithm to be more aggressive and try to set up for a head-to-head collision when the enemy snake is shorter.
@@ -185,7 +180,6 @@ The reason why head-to-head collisions are difficult to model is that the snakes
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 \section{Experimental results}
 \label{sec:exps}
 
@@ -193,7 +187,7 @@ This section presents the experimental results collected at the end of the proje
 
 
 \subsection{Competition Results}
-The largest testing of our solution was through the competition hosted on the 19th and 20th of May containing 26 other teams from the course. The competition consisted of two different parts, first a round where every team played a match against every other team, and secondly a play-off between the top 8 teams. During the first part, each team were responsible for hosting twelve games each, thus we hosted games against twelve other teams and the remaining teams hosted games against us. In this manner, every team was paired against each other in the first round. Furthermore, a win was awarded 3 points, a draw 1 point and a loss did not net any points. Consequently, the eight best teams from this round then played a knockout tournament, where matches consisted of a best-of-three format and the loser was eliminated while the winner progressed to the next round. 
+The largest testing of our solution was through the competition hosted on the 19th and 20th of May containing 26 other teams from the course. The competition consisted of two different parts, first a round where every team played a match against every other team, and secondly a play-off between the top 8 teams. During the first part, each team was responsible for hosting twelve games each, thus we hosted games against twelve other teams and the remaining teams hosted games against us. In this manner, every team was paired against each other in the first round. Furthermore, a win was awarded 3 points, a draw 1 point and a loss did not net any points. Consequently, the eight best teams from this round then played a knockout tournament, where matches consisted of a best-of-three format and the loser was eliminated while the winner progressed to the next round. 
 
 Table \ref{tab:round1} presents our results from the first round, where our solution performed well beating 19 of the teams while losing the remaining 5 matches. This resulted in a total of 57 points and a shared first place with five other teams, see Table 2 for reference, and in turn a place in the ensuing knockout stage. The results from the play-offs can be viewed in Figure 1, where we are group 3.
 
@@ -210,68 +204,54 @@ Table \ref{tab:round1} presents our results from the first round, where our solu
     \label{tab:round1}
 \end{table}
 
-
-\begin{center}
-    \begin{forest}
-      for tree={
-        grow=west,
-        parent anchor=west,
-        child anchor=east,
-        edge={draw, -},
-        l sep+=10pt,
-        s sep+=10pt,
-        anchor=west,
-        calign=center,
-        calign primary angle=30,
-        calign secondary angle=60,
-        edge path={
-          \noexpand\path [draw, -] (!u.parent anchor) -- ++(5pt,0) |- (.child anchor)\forestoption{edge label};
-        },
-      }
-      [Group 23
+  
+\begin{figure}[ht!] 
+  \centering
+  \begin{forest}
+    for tree={
+      grow=west,
+      parent anchor=west,
+      child anchor=east,
+      edge={draw, -},
+      l sep+=10pt,
+      s sep+=10pt,
+      anchor=west,
+      calign=center,
+      calign primary angle=30,
+      calign secondary angle=60,
+      edge path={
+        \noexpand\path [draw, -] (!u.parent anchor) -- ++(5pt,0) |- (.child anchor)\forestoption{edge label};
+      },
+    }
+    [Group 23
+      [Group 2
         [Group 2
-          [Group 2
-            [Group 2]
-            [Group 4]
-          ]
-          [Group 3
-            [Group 3]
-            [Group 9]
-          ]
+          [Group 2]
+          [Group 4]
         ]
-        [Group 23
-          [Group 12
-            [Group 12]
-            [Group 13]
-          ]
-          [Group 23
-            [Group 23]
-            [Group 24]
-          ]
+        [Group 3
+          [Group 3]
+          [Group 9]
         ]
       ]
-    \end{forest}
-\end{center}
-
-
-  
-
-Our solution differed from most of the top 8 teams where only two other groups employed a tree search algorithm. The first was group 13 which utilized a paranoid Minimax algorithm where each snake saw all the other snakes as opponents, hence the paranoid part, and group 9 who used a game tree of depth 2 to determine which move to make. The remaining teams’ approaches were similar to a “rule-based” method where a modified A* algorithm would guide the snake based on different weights and heuristics. One common idea was to use the flood fill algorithm to find dead-ends and reachable grid cells from any position. This can then be used to determine which grid cell a snake should navigate towards and the path to the destination would be determined using A* where different weights, such as proximity to enemy snakes, guide the search.
-
-
-Lastly, out of curiosity, we enrolled our solution in some daily competitions hosted by \url{https://play.battlesnake.com/} where anyone can submit their solution. The snakes then battle in the free-for-all settings listed below.
-
-\begin{enumerate}
-    \item \textbf{Standard:} four snakes face off on an 11 by 11 grid and the last remaining snake is the victor. The rules regarding elimination are the same as those described in section 1.1.
-    \item \textbf{Duels:} The same format as standard, only in duels there are only two snakes.
-
-    \item \textbf{Royale:} The same format as standard, with the exception of a “hazardous” zone which grows from the borders of the map towards the centre. If a snake moves through this zone an additional health point is lost during the turn.
-
-\end{enumerate}
-For an extensive description of the different game modes see the official website: \url{https://docs.battlesnake.com/rules}. 
-
-
-The result of this competition can be observed in table 4 where our solution placed 69th out of 174 in royale, XX out of YY in standard, and XX out of YY in duels. Although the modes were different from the format of the competition in which our solution was designed, we made no changes to the code before the online tournament. This led to our snake somewhat underperforming in the format Royale where it was unable to effectively understand the dangers of moving through the hazardous zone, leading to many eliminations as the result of low health. 
+      [Group 23
+        [Group 12
+          [Group 12]
+          [Group 13]
+        ]
+        [Group 23
+          [Group 23]
+          [Group 24]
+        ]
+      ]
+    ]
+  \end{forest}
+  \caption{The results from the playoffs.}
+\end{figure}
+      
+      
+      
+      Our solution differed from most of the top 8 teams where only two other groups employed a tree search algorithm. The first was group 13 which utilized a paranoid Minimax algorithm where each snake saw all the other snakes as opponents, hence the paranoid part, and group 9 used a game tree of depth 2 to determine which move to make. The remaining teams’ approaches were similar to a “rule-based” method where a modified A* algorithm would guide the snake based on different weights and heuristics. One common idea was to use the flood fill algorithm to find dead-ends and reachable grid cells from any position. This can then be used to determine which grid cell a snake should navigate towards and the path to the destination would be determined using A* where different weights, such as proximity to enemy snakes, guide the search.
 
 % \subsection{Analysis of Outcome}
 
@@ -279,11 +259,17 @@ The result of this competition can be observed in table 4 where our solution pla
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 \section{Summary and Conclusions}
 \label{sec:summary}
+To summarize, this project implemented an AI capable of playing the Battlesnake game utilizing the MCTS, resulting in a third place in the final competition. Although we are content with the results it is observable that there is room for improvement. The first and perhaps easiest fix that could be made is to fine-tune the different parameters such as the exploration constant in the tree policy. However, these types of improvements can be tedious and not very interesting, thus if we were to redo or extend the project, this part of the implementation would not take priority. Another similar type of improvement would be to make the state generation methods more efficient since these are often the slowest part of the algorithm. With a faster state generation, the tree search would be able to reach lower depths of the game tree, resulting in more qualitative decisions. However, the solution is able to reach a depth of 12-15 consistently, and instead, the quality of the search should perhaps be improved before improving the efficiency. 
 
+One way to improve the search has to do with the fact that food is spawned with a certain probability every round in the free squares of the board. Currently, our implementation does not take this into consideration when generating new states during the search. Thus, it might be necessary to include this functionality to reap the benefits of increased depths. Since, if the algorithm reaches a depth of say 30, the current state representation at this depth would be incorrect since no food would have been added to the board, which could lead to misinformed decisions and evaluations being made.
 
+A second aspect in order to improve the search is the evaluation function which as explained earlier was quite simplistic, only calculating the difference in health and length of the two teams. Integrating domain-specific knowledge such as avoiding dead-ends or constricting the space of enemy snakes, could improve the accuracy of the evaluation and in turn the performance of the solution. These types of ideas were present among most of the top-performing teams, which makes us believe that this could indeed lead to an improvement in performance. 
+
+Additional aspects which could be improved are regarding the game tree which is discarded every round only to be rebuilt from scratch. One obvious improvement is to reuse parts of the game tree in the following turns since these have already been explored to a certain extent. Similarly, some states are either identical or very similar, retaining information about one state could then be applied to similar or identical states later in the search which could save computational power and allow the algorithm to increase the depth..
+
+Lastly, AlphaZero showcased an impressive performance against very strong traditional chess engines such as Stockfish, where neural networks were used to guide the selection and evaluation of the game tree, coupled with reinforcement learning to improve from self-play. The time limit of this project did not allow us to include these types of extensions but they describe an interesting improvement potential that would be suitable for further studies. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

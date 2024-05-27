@@ -1,29 +1,27 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% http://bibdesk.sourceforge.net/
 
+@article{doi:10.1126/science.aar6404,
+author = {David Silver  and Thomas Hubert  and Julian Schrittwieser  and Ioannis Antonoglou  and Matthew Lai  and Arthur Guez  and Marc Lanctot  and Laurent Sifre  and Dharshan Kumaran  and Thore Graepel  and Timothy Lillicrap  and Karen Simonyan  and Demis Hassabis },
+title = {A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play},
+journal = {Science},
+volume = {362},
+number = {6419},
+pages = {1140-1144},
+year = {2018},
+doi = {10.1126/science.aar6404},
+URL = {https://www.science.org/doi/abs/10.1126/science.aar6404},
+eprint = {https://www.science.org/doi/pdf/10.1126/science.aar6404},
+abstract = {Computers can beat humans at increasingly complex games, including chess and Go. However, these programs are typically constructed for a particular game, exploiting its properties, such as the symmetries of the board on which it is played. Silver et al. developed a program called AlphaZero, which taught itself to play Go, chess, and shogi (a Japanese version of chess) (see the Editorial, and the Perspective by Campbell). AlphaZero managed to beat state-of-the-art programs specializing in these three games. The ability of AlphaZero to adapt to various game rules is a notable step toward achieving a general game-playing system. Science, this issue p. 1140; see also pp. 1087 and 1118 AlphaZero teaches itself to play three different board games and beats state-of-the-art programs in each. The game of chess is the longest-studied domain in the history of artificial intelligence. The strongest programs are based on a combination of sophisticated search techniques, domain-specific adaptations, and handcrafted evaluation functions that have been refined by human experts over several decades. By contrast, the AlphaGo Zero program recently achieved superhuman performance in the game of Go by reinforcement learning from self-play. In this paper, we generalize this approach into a single AlphaZero algorithm that can achieve superhuman performance in many challenging games. Starting from random play and given no domain knowledge except the game rules, AlphaZero convincingly defeated a world champion program in the games of chess and shogi (Japanese chess), as well as Go.}}
 
-%% Created for Patric Jensfelt at 2014-08-23 22:39:14 +0200 
+@misc{chess.com_stockfish,
+  title = {Stockfish - Chess Engines},
+  howpublished = {\url{https://www.chess.com/terms/stockfish-chess-engine}},
+  note = {Accessed: 2024-05-27}
+}
 
 
-%% Saved with string encoding Unicode (UTF-8) 
-TY  - JOUR
-AU  - Auer, Peter
-AU  - Cesa-Bianchi, Nicolò
-AU  - Fischer, Paul
-PY  - 2002
-DA  - 2002/05/01
-TI  - Finite-time Analysis of the Multiarmed Bandit Problem
-JO  - Machine Learning
-SP  - 235
-EP  - 256
-VL  - 47
-IS  - 2
-AB  - Reinforcement learning policies face the exploration versus exploitation dilemma, i.e. the search for a balance between exploring the environment to find profitable actions while taking the empirically best action as often as possible. A popular measure of a policy's success in addressing this dilemma is the regret, that is the loss due to the fact that the globally optimal policy is not followed all the times. One of the simplest examples of the exploration/exploitation dilemma is the multi-armed bandit problem. Lai and Robbins were the first ones to show that the regret for this problem has to grow at least logarithmically in the number of plays. Since then, policies which asymptotically achieve this regret have been devised by Lai and Robbins and many others. In this work we show that the optimal logarithmic regret is also achievable uniformly over time, with simple and efficient policies, and for all reward distributions with bounded support.
-SN  - 1573-0565
-UR  - https://doi.org/10.1023/A:1013689704352
-DO  - 10.1023/A:1013689704352
-ID  - Auer2002
-ER  - 
+
 @article{AuerPeter2002FAot,
 abstract = {Reinforcement learning policies face the exploration versus exploitation dilemma, i.e. the search for a balance between exploring the environment to find profitable actions while taking the empirically best action as often as possible. A popular measure of a policy's success in addressing this dilemma is the regret, that is the loss due to the fact that the globally optimal policy is not followed all the times. One of the simplest examples of the exploration/exploitation dilemma is the multi-armed bandit problem. Lai and Robbins were the first ones to show that the regret for this problem has to grow at least logarithmically in the number of plays. Since then, policies which asymptotically achieve this regret have been devised by Lai and Robbins and many others. In this work we show that the optimal logarithmic regret is also achievable uniformly over time, with simple and efficient policies, and for all reward distributions with bounded support.[PUBLICATION ABSTRACT]},
 author = {Auer, Peter and Cesa-bianchi, Nicolò and Fischer, Paul},
@@ -41,20 +39,13 @@ year = {2002},
 }
 
 
-@InProceedings{10.1007/11871842_29,
-author="Kocsis, Levente
-and Szepesv{\'a}ri, Csaba",
-editor="F{\"u}rnkranz, Johannes
-and Scheffer, Tobias
-and Spiliopoulou, Myra",
-title="Bandit Based Monte-Carlo Planning",
-booktitle="Machine Learning: ECML 2006",
-year="2006",
-publisher="Springer Berlin Heidelberg",
-address="Berlin, Heidelberg",
-pages="282--293",
-abstract="For large state-space Markovian Decision Problems Monte-Carlo planning is one of the few viable approaches to find near-optimal solutions. In this paper we introduce a new algorithm, UCT, that applies bandit ideas to guide Monte-Carlo planning. In finite-horizon or discounted MDPs the algorithm is shown to be consistent and finite sample bounds are derived on the estimation error due to sampling. Experimental results show that in several domains, UCT is significantly more efficient than its alternatives.",
-isbn="978-3-540-46056-5"
+@inproceedings{kocsis2006bandit,
+  title={Bandit based monte-carlo planning},
+  author={Kocsis, Levente and Szepesv{\'a}ri, Csaba},
+  booktitle={European conference on machine learning},
+  pages={282--293},
+  year={2006},
+  organization={Springer}
 }
 
 

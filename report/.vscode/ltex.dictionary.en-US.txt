@@ -1,2 +1,4 @@
 backpropagation
 Minimax
+Battlesnake
+Stockfish

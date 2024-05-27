@@ -1,8 +1,33 @@
 \begin{thebibliography}{1}
 
-\bibitem{RussellNorvigAIBook3rd}
-Stuart~J. Russell and Peter Norvig.
-\newblock {\em Artificial Intelligence - A Modern Approach}.
-\newblock Number ISBN 978-0-13-207148-2. Pearson Education, 3rd edition, 2010.
+\bibitem{chess.com_stockfish}
+Stockfish - chess engines.
+\newblock \url{https://www.chess.com/terms/stockfish-chess-engine}.
+\newblock Accessed: 2024-05-27.
+
+\bibitem{AuerPeter2002FAot}
+Peter Auer, Nicolò Cesa-bianchi, and Paul Fischer.
+\newblock Finite-time analysis of the multiarmed bandit problem.
+\newblock {\em Machine learning}, 47(2-3):235--256, 2002.
+
+\bibitem{kocsis2006bandit}
+Levente Kocsis and Csaba Szepesv{\'a}ri.
+\newblock Bandit based monte-carlo planning.
+\newblock In {\em European conference on machine learning}, pages 282--293.
+  Springer, 2006.
+
+\bibitem{POWLEY201492}
+Edward~J. Powley, Peter~I. Cowling, and Daniel Whitehouse.
+\newblock Information capture and reuse strategies in monte carlo tree search,
+  with applications to games of hidden information.
+\newblock {\em Artificial Intelligence}, 217:92--116, 2014.
+
+\bibitem{doi:10.1126/science.aar6404}
+David Silver, Thomas Hubert, Julian Schrittwieser, Ioannis Antonoglou, Matthew
+  Lai, Arthur Guez, Marc Lanctot, Laurent Sifre, Dharshan Kumaran, Thore
+  Graepel, Timothy Lillicrap, Karen Simonyan, and Demis Hassabis.
+\newblock A general reinforcement learning algorithm that masters chess, shogi,
+  and go through self-play.
+\newblock {\em Science}, 362(6419):1140--1144, 2018.
 
 \end{thebibliography}
